@@ -1,21 +1,21 @@
 {
   "expo": {
-    "name": "Blank Template",
-    "slug": "builderApp",
+    "name": "galio-native-kit",
+    "description": "Build amazing apps in one codebase. //wip from sdk30 to sdk33",
+    "slug": "galio-native-kit",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
+    "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#FE2472"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -25,6 +25,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "githubUrl": "https://github.com/galio-org/galio"
   }
 }
