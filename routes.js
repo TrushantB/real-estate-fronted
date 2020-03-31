@@ -19,6 +19,7 @@ import theme from './src/theme';
 import Matrix from './src/screens/matrix';
 import Contact from './src/screens/contact';
 import Message from './src/screens/message';
+import Dashboard from './src/screens/dashboard';
 
 const GalioDrawer = props => (
   <SafeAreaView style={styles.drawer} forceInset={{ top: 'always', horizontal: 'never' }}>
@@ -79,20 +80,27 @@ MenuIcon.propTypes = {
 };
 
 const screens = {
-  Home: {
+  OngoingSite: {
     screen: OngoingSite,
     navigationOptions: {
-      drawerLabel: 'Ongoing Site',
+      drawerLabel: 'Ongoing Sites',
       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
     },
   },
-  Matrix: {
-    screen: Matrix,
+  Home: {
+    screen: Dashboard,
     navigationOptions: {
-      drawerLabel: 'Matrix',
+      drawerLabel: 'Dashboard',
       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
     },
   },
+  // Matrix: {
+  //   screen: Matrix,
+  //   navigationOptions: {
+  //     drawerLabel: 'Matrix',
+  //     drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+  //   },
+  // },
   Contact: {
     screen: Contact,
     navigationOptions: {
@@ -114,13 +122,7 @@ const screens = {
       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
     },
   },
-  // News: {
-  //   screen: News,
-  //   navigationOptions: {
-  //     drawerLabel: 'News Screen',
-  //     drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-  //   },
-  // },
+  
   // OrderConfirmed: {
   //   screen: OrderConfirmed,
   //   navigationOptions: {

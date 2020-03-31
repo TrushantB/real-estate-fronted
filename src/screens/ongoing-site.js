@@ -1,147 +1,196 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
-  Image, StyleSheet, ScrollView, Platform, TouchableOpacity
+  ScrollView, StyleSheet, Dimensions, Platform, TouchableOpacity
 } from 'react-native';
-
-import Constants from 'expo-constants';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // Galio components
 import {
-  Button, Block, Card, Text, Icon, NavBar,
+  Card, Block, NavBar, Icon,Text
 } from 'galio-framework';
 import theme from '../theme';
 
-const Author = props => (
-  <Block row shadow middle space="between" style={styles.author}>
-    <Block flex={0.25}>
-      <Image source={{ uri: props.avatar }} style={styles.avatar} />
-    </Block>
-    <Block flex={0.7} style={styles.middle}>
-      <Text style={{ fontWeight: '500' }}>{props.title}</Text>
-      <Text p muted>{props.caption}</Text>
-    </Block>
-    <Block flex={0.5} row middle space="around">
-      <Block row middle>
-        <Icon name="eye" family="material-community" color={theme.COLORS.MUTED} size={theme.SIZES.FONT * 0.8} />
-        <Text size={theme.SIZES.FONT * 0.7} p muted style={{ marginLeft: theme.SIZES.FONT * 0.25 }}>25.6k</Text>
-      </Block>
-      <Block row middle>
-        <Icon name="heart-outline" family="material-community" color={theme.COLORS.MUTED} size={theme.SIZES.FONT * 0.8} />
-        <Text size={theme.SIZES.FONT * 0.7} p muted style={{ marginLeft: theme.SIZES.FONT * 0.25 }}>936</Text>
-      </Block>
-    </Block>
-  </Block>
-);
+const { width } = Dimensions.get('screen');
+const BASE_SIZE = theme.SIZES.BASE;
 
-Author.defaultProps = {
-  author: null,
-  title: null,
-  caption: null,
-};
+const cards = [
+  {
+    id: 1,
+    image: 'https://images.unsplash.com/photo-1494252713559-f26b4bf0b174?w=840&q=300',
+    avatar: 'http://i.pravatar.cc/100',
+    title: 'Aroma Towers',
+    caption: '48 minutes ago',
+    location: 'Kothrud, Kare Nagar',
+    price:'10,00,000',
+    rating:4,
+    reamning:303,
+    sold:201
+  },
+  {
+    id: 2,
+    image: 'https://images.unsplash.com/photo-1503631285924-e1544dce8b28?&w=1200&h=1600&fit=crop&crop=entropy&q=300',
+    avatar: 'http://i.pravatar.cc/100',
+    title: 'Trump Towers',
+    caption: '80 minutes ago',
+    location: 'Los Angeles, CA',
+    price:'10,00,000',
+    rating:5,
+    reamning:37,
+    sold:201
+  },
+  {
+    id: 3,
+    image: 'https://images.unsplash.com/photo-1497802176320-541c8e8de98d?&w=1600&h=900&fit=crop&crop=entropy&q=300',
+    avatar: 'http://i.pravatar.cc/100',
+    title: 'Gririkund',
+    caption: '138 minutes ago',
+    location: 'Deccan,J.m.road',
+    price:'20,00,000',
+    rating:4,
+    reamning:327,
+    sold:301
+    // padded: true,
+  },
+  {
+    id: 4,
+    image: 'https://images.unsplash.com/photo-1490049350474-498de43bc885?&w=1600&h=900&fit=crop&crop=entropy&q=300',
+    avatar: 'http://i.pravatar.cc/100',
+    title: 'WOW Fitness',
+    caption: '138 minutes ago',
+    location: 'Los Angeles, CA',
+    price:'30,00,000',
+    rating:4,
+    reamning:37,
+    sold:201
+    // padded: true,
+  },
+  {
+    id: 3,
+    image: 'https://images.unsplash.com/photo-1493612216891-65cbf3b5c420?&w=1500&h=900&fit=crop&crop=entropy&q=300',
+    avatar: 'http://i.pravatar.cc/100',
+    title: 'Christopher Moon',
+    caption: '138 minutes ago',
+    price:'40,00,000',
+    rating:4.3,
+    reamning:37,
+    sold:201
+    // full: true,
+  },
+  {
+    id: 6,
+    image: 'https://images.unsplash.com/photo-1506321806993-0e39f809ae59?&w=1500&h=1900&fit=crop&crop=entropy&q=300',
+    avatar: 'http://i.pravatar.cc/100',
+    title: 'Gharte',
+    caption: '58 minutes ago',
+    price:'50,00,000',
+    rating:3,
+    reamning:37,
+    sold:201
+    // full: true,
+  },
+];
 
-Author.propsTypes = {
-  author: PropTypes.string,
-  title: PropTypes.string,
-  caption: PropTypes.string,
-};
-
-
-const OngoingSite = props => (
-  <Block safe flex>
-    <NavBar
-      title="Ongoing Sites"
-      titleStyle={{ alignSelf: 'flex-start' }}
-      leftIconColor={theme.COLORS.MUTED}
-      left={(
-        <TouchableOpacity onPress={() => props.navigation.openDrawer()}>
-          <Icon 
-            name="menu"
-            family="feather"
-            size={theme.SIZES.BASE}
-            color={theme.COLORS.ICON}
-          />
-        </TouchableOpacity>
-      )}
-    />
-
-    <ScrollView style={{ flex: 1 }}>
-      <Block flex style={styles.news}>
-        <Image
-          source={{ uri: 'https://images.unsplash.com/photo-1535649168324-4198731b2252?fit=crop&w=1300&q=80' }}
-          style={styles.articleImage}
+export default class OngoingSite extends React.Component {
+  render() {
+    const { navigation } = this.props;
+    return (
+      <Block safe flex style={{ backgroundColor: theme.COLORS.WHITE }}>
+        <NavBar
+          title="Ongoing Sites"
+          left={(
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <Icon 
+                name="menu"
+                family="feather"
+                size={theme.SIZES.BASE}
+                color={theme.COLORS.ICON}
+              />
+            </TouchableOpacity>
+          )}
+          style={Platform.OS === 'android' ? { marginTop: theme.SIZES.BASE } : null}
         />
-        <Block style={styles.article}>
-          <Text h4>
-            I would happily watch a TV show about crabs
-          </Text>
-          <Text muted style={[styles.text, { marginVertical: theme.SIZES.BASE * 1.3 }]}>
-            InterBlocking is super star
-          </Text>
-          <Text style={styles.text}>
-            You should totally read this sutuff, like seriously all yo homies
-            love sneak dissing but at least u’re true, right?
-          </Text>
-        </Block>
+        <ScrollView contentContainerStyle={styles.cards}>
+          <Block flex space="between">
+            {cards && cards.map((card, id) => (
+              <Card
+                key={`card-${card.image}`}
+                flex
+                borderless
+                shadowColor={theme.COLORS.BLACK}
+                titleColor={card.full ? theme.COLORS.WHITE : null}
+                style={styles.card}
+                title={card.title}
+                caption={card.caption}
+                location={card.location}
+                avatar={`${card.avatar}?${id}`}
+                image={card.image}
+                imageStyle={[card.padded ? styles.rounded : null]}
+                imageBlockStyle={[
+                  card.padded ? { padding: theme.SIZES.BASE / 2 } : null,
+                  card.full ? null : styles.noRadius,
+                ]}
+                footerStyle={card.full ? styles.full : null}
+              >
+                {card.full ? <LinearGradient colors={['transparent', 'rgba(0,0,0, 0.8)']} style={styles.gradient} /> : null}
+                <Block flex>
+                  <Block row>
+                  <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 15}}>Price:</Text>
+                  <Text size={BASE_SIZE * 0.875} muted>{card.price}</Text>
+
+                  <Text style={{fontWeight: 'bold',marginLeft: 15}}>Rating:</Text>
+                  <Text size={BASE_SIZE * 0.875} muted>{card.rating}</Text>
+                  </Block>
+                  <Block row>
+                  <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 15}}>Sold:</Text>
+                  <Text size={BASE_SIZE * 0.875} muted>{card.sold} Flats</Text>
+
+                  <Text style={{fontWeight: 'bold',marginLeft: 15}}>Reamning:</Text>
+                  <Text size={BASE_SIZE * 0.875} muted>{card.reamning} Flats</Text>
+                  </Block>
+              </Block>
+              </Card>
+            ))}
+          </Block>
+        </ScrollView>
       </Block>
-  
-      <Block flex style={styles.news}>
-        <Image
-          source={{ uri: 'https://images.unsplash.com/photo-1497802176320-541c8e8de98d?&w=1600&h=900&fit=crop&crop=entropy&q=300' }}
-          style={styles.articleImage}
-        />
-        <Block style={styles.article}>
-          <Text h4>
-            I would happily watch a TV show about crabs
-          </Text>
-          <Text muted style={[styles.text, { marginVertical: theme.SIZES.BASE * 1.3 }]}>
-            InterBlocking is super star
-          </Text>
-          <Text style={styles.text}>
-            You should totally read this sutuff, like seriously all yo homies
-            love sneak dissing but at least u’re true, right?
-          </Text>
-        </Block>
-      </Block>
-    </ScrollView>
-  </Block>
-);
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-  article: {
-    marginTop: theme.SIZES.BASE * 1.75,
-  },
-  articleImage: {
-    borderRadius: theme.SIZES.BASE / 2,
-    height: theme.SIZES.BASE * 13.75,
-  },
-  news: {
-    marginTop: theme.SIZES.BASE / 2,
-    paddingBottom: theme.SIZES.BASE / 2,
-    justifyContent: 'flex-start',
-    paddingHorizontal: theme.SIZES.BASE,
-  },
-  button: {
-    width: theme.SIZES.BASE * 2,
-    borderColor: 'transparent',
-  },
-  author: {
-    position: 'absolute',
-    right: theme.SIZES.BASE,
-    left: theme.SIZES.BASE,
-    bottom: Constants.statusBarHeight,
+  cards: {
+    width,
     backgroundColor: theme.COLORS.WHITE,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  card: {
+    backgroundColor: theme.COLORS.WHITE,
+    width: width - theme.SIZES.BASE * 2,
+    marginVertical: theme.SIZES.BASE * 0.875,
     elevation: theme.SIZES.BASE / 2,
   },
-  text: {
-    fontWeight: '400',
-    fontSize: theme.SIZES.FONT * 0.875,
-    lineHeight: theme.SIZES.BASE * 1.25,
-    letterSpacing: 0.3,
-    marginBottom: theme.SIZES.BASE,
+  full: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    left: 0,
+  },
+  noRadius: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  rounded: {
+    borderRadius: theme.SIZES.BASE * 0.1875,
+  },
+  gradient: {
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 90,
+    position: 'absolute',
+    overflow: 'hidden',
+    borderBottomRightRadius: theme.SIZES.BASE * 0.5,
+    borderBottomLeftRadius: theme.SIZES.BASE * 0.5,
   },
 });
-
-export default OngoingSite;
