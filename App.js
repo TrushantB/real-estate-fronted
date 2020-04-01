@@ -4,6 +4,7 @@ import GalioApp from './routes';
 
 export default class App extends React.Component {
   render() {
+    console.log("Hello");
     return (
       <View style={{ flex: 1 }}>
         <StatusBar hidden={false} />

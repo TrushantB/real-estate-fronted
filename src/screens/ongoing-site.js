@@ -3,13 +3,13 @@ import {
   ScrollView, StyleSheet, Dimensions, Platform, TouchableOpacity
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import BaseService from '../shard/services/base-service';
 // Galio components
 import {
   Card, Block, NavBar, Icon,Text
 } from 'galio-framework';
 import theme from '../theme';
-
+const baseService=new BaseService();
 const { width } = Dimensions.get('screen');
 const BASE_SIZE = theme.SIZES.BASE;
 
@@ -91,7 +91,12 @@ const cards = [
 ];
 
 export default class OngoingSite extends React.Component {
+
   render() {
+    // baseService.getData().then((response) => {
+    //   console.log(response.data);
+      
+    // });
     const { navigation } = this.props;
     return (
       <Block safe flex style={{ backgroundColor: theme.COLORS.WHITE }}>
