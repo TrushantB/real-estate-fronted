@@ -16,7 +16,7 @@ const BASE_SIZE = theme.SIZES.BASE;
 const cards = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1494252713559-f26b4bf0b174?w=840&q=300',
+    image: 'https://i.picsum.photos/id/195/400/400.jpg',
     avatar: 'http://i.pravatar.cc/100',
     title: 'Aroma Towers',
     caption: '48 minutes ago',
@@ -28,7 +28,7 @@ const cards = [
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1503631285924-e1544dce8b28?&w=1200&h=1600&fit=crop&crop=entropy&q=300',
+    image: 'https://i.picsum.photos/id/1076/300/300.jpg',
     avatar: 'http://i.pravatar.cc/100',
     title: 'Trump Towers',
     caption: '80 minutes ago',
@@ -40,7 +40,7 @@ const cards = [
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1497802176320-541c8e8de98d?&w=1600&h=900&fit=crop&crop=entropy&q=300',
+    image: 'https://i.picsum.photos/id/1075/300/300.jpg',
     avatar: 'http://i.pravatar.cc/100',
     title: 'Gririkund',
     caption: '138 minutes ago',
@@ -53,7 +53,7 @@ const cards = [
   },
   {
     id: 4,
-    image: 'https://images.unsplash.com/photo-1490049350474-498de43bc885?&w=1600&h=900&fit=crop&crop=entropy&q=300',
+    image: 'https://i.picsum.photos/id/1081/400/400.jpg',
     avatar: 'http://i.pravatar.cc/100',
     title: 'WOW Fitness',
     caption: '138 minutes ago',
@@ -127,7 +127,7 @@ export default class OngoingSite extends React.Component {
                 title={card.title}
                 caption={card.caption}
                 location={card.location}
-                avatar={`${card.avatar}?${id}`}
+                avatar={`${card.avatar}?${id + 5}`}
                 image={card.image}
                 imageStyle={[card.padded ? styles.rounded : null]}
                 imageBlockStyle={[
