@@ -5,7 +5,7 @@ import {
 
 // galio component
 import {
-  Block, Button, Input, NavBar, Text,
+  Block, Button, Input, NavBar, Text,Icon
 } from 'galio-framework';
 import theme from '../theme';
 
@@ -44,7 +44,7 @@ class Login extends React.Component {
                   round
                   onlyIcon
                   iconSize={theme.SIZES.BASE * 1.625}
-                  icon="facebook"
+                  icon=""
                   iconFamily="FontAwesome"
                   color={theme.COLORS.FACEBOOK}
                   shadowColor={theme.COLORS.FACEBOOK}
@@ -58,7 +58,7 @@ class Login extends React.Component {
                   round
                   onlyIcon
                   iconSize={theme.SIZES.BASE * 1.625}
-                  icon="twitter"
+                  icon=""
                   iconFamily="FontAwesome"
                   color={theme.COLORS.TWITTER}
                   shadowColor={theme.COLORS.TWITTER}
@@ -72,7 +72,7 @@ class Login extends React.Component {
                   round
                   onlyIcon
                   iconSize={theme.SIZES.BASE * 1.625}
-                  icon="dribbble"
+                  icon=""
                   iconFamily="FontAwesome"
                   color={theme.COLORS.DRIBBBLE}
                   shadowColor={theme.COLORS.DRIBBBLE}

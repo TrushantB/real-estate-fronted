@@ -7,6 +7,7 @@ import {
   createDrawerNavigator,
   DrawerItems,
 } from 'react-navigation';
+
 import email from 'react-native-email'
 
 import { Block, Icon, Text } from 'galio-framework';
@@ -16,10 +17,11 @@ import Register from './src/screens/Register';
 import OngoingSite from './src/screens/ongoing-site';
 import Notification from './src/screens/notification';
 import theme from './src/theme';
-import Matrix from './src/screens/matrix';
+// import Matrix from './src/screens/matrix';
 import Contact from './src/screens/contact';
 import Message from './src/screens/message';
 import Dashboard from './src/screens/dashboard';
+import Enquiry from './src/screens/enquiry';
 
 const GalioDrawer = props => (
   <SafeAreaView style={styles.drawer} forceInset={{ top: 'always', horizontal: 'never' }}>
@@ -87,24 +89,10 @@ const screens = {
       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
     },
   },
-  Home: {
-    screen: Dashboard,
+  Enquiry: {
+    screen: Enquiry,
     navigationOptions: {
-      drawerLabel: 'Dashboard',
-      drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-    },
-  },
-  // Matrix: {
-  //   screen: Matrix,
-  //   navigationOptions: {
-  //     drawerLabel: 'Matrix',
-  //     drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-  //   },
-  // },
-  Contact: {
-    screen: Contact,
-    navigationOptions: {
-      drawerLabel: 'Contact',
+      drawerLabel: 'Enquiry',
       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
     },
   },
@@ -115,6 +103,13 @@ const screens = {
       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
     },
   },
+  Contact: {
+    screen: Contact,
+    navigationOptions: {
+      drawerLabel: 'Contact',
+      drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+    },
+  },
   Message: {
     screen: Message,
     navigationOptions: {
@@ -122,21 +117,6 @@ const screens = {
       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
     },
   },
-  
-  // OrderConfirmed: {
-  //   screen: OrderConfirmed,
-  //   navigationOptions: {
-  //     drawerLabel: 'Order Confirmed',
-  //     drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-  //   },
-  // },
-  // Presentation: {
-  //   screen: Presentation,
-  //   navigationOptions: {
-  //     drawerLabel: 'Presentation Screen',
-  //     drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-  //   },
-  // },
   Login: {
     screen: Login,
     navigationOptions: {
@@ -151,7 +131,30 @@ const screens = {
       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
     },
   },
-  // Registerv2: {
+  Home: {
+    screen: Dashboard,
+    navigationOptions: {
+      drawerLabel: 'Dashboard',
+      drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+    },
+  },
+  
+  // OrderConfirmed: {
+    //   screen: OrderConfirmed,
+    //   navigationOptions: {
+      //     drawerLabel: 'Order Confirmed',
+      //     drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+      //   },
+      // },
+      // Presentation: {
+        //   screen: Presentation,
+        //   navigationOptions: {
+          //     drawerLabel: 'Presentation Screen',
+          //     drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+          //   },
+          // },
+          
+          // Registerv2: {
   //   screen: Registerv2,
   //   navigationOptions: {
   //     drawerLabel: 'Register Screen v2',

@@ -57,7 +57,7 @@ class Login extends React.Component {
                   round
                   onlyIcon
                   iconSize={theme.SIZES.BASE * 1.625}
-                  icon="facebook"
+                  icon=""
                   iconFamily="FontAwesome"
                   onPress={() => Alert.alert('Not implemented')}
                   color={theme.COLORS.FACEBOOK}
@@ -71,7 +71,7 @@ class Login extends React.Component {
                   round
                   onlyIcon
                   iconSize={theme.SIZES.BASE * 1.625}
-                  icon="twitter"
+                  icon=""
                   iconFamily="FontAwesome"
                   onPress={() => Alert.alert('Not implemented')}
                   color={theme.COLORS.TWITTER}
@@ -85,7 +85,7 @@ class Login extends React.Component {
                   round
                   onlyIcon
                   iconSize={theme.SIZES.BASE * 1.625}
-                  icon="dribbble"
+                  icon=""
                   iconFamily="FontAwesome"
                   onPress={() => Alert.alert('Not implemented')}
                   color={theme.COLORS.DRIBBBLE}
@@ -133,9 +133,9 @@ class Login extends React.Component {
                 onPress={() => Alert.alert(
                   'Sign up action',
                   `
-Username: ${user}
-Email: ${email}
-Password: ${password}`,
+                  Username: ${user}
+                  Email: ${email}
+                  Password: ${password}`,
                 )}
               >
                 Sign up

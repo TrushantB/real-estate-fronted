@@ -115,7 +115,7 @@ class Dashboard extends React.Component {
 
         <AreaChart
           yMin={0}
-          yMax={Math.max(...statsActive) + 1}
+          yMax={Math.max(...statsActive) + 1} 
           data={statsActive}
           curve={shape.curveNatural}
           style={{ height: BASE_SIZE * 10 }}

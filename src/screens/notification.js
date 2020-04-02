@@ -123,10 +123,10 @@ export default class Notification extends React.Component {
               >
                   <Block flex>
                   <Block row>
-                  <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 15}} >{card.message}</Text>
+                    <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 15}} >{card.message}</Text>
                   </Block>
                   <Block row>
-                  <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 15}} muted>{card.noOfMessages} New</Text>
+                    <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 15}} muted>{card.noOfMessages} New</Text>
                   </Block>
                   </Block>
               </Card>
