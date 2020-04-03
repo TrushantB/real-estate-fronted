@@ -25,7 +25,7 @@ const cards = [
   {
     title: 'Kothrud',
     sold:12,
-    reamning:231,
+    remaining:231,
     rating:3,
     subtitle: '15 completed tasks1',
     icon: 'list-bullet',
@@ -35,7 +35,7 @@ const cards = [
   {
     title: 'Hijewadi',
     sold:12,
-    reamning:231,
+    remaining:231,
     rating:3,
     subtitle: '15 completed tasks2',
     icon: 'bag-17',
@@ -44,7 +44,7 @@ const cards = [
   {
     title: 'Pune Station',
     sold:12,
-    reamning:231,
+    remaining:231,
     rating:3,
     subtitle: '15 completed tasks3',
     icon: 'credit-card',
@@ -54,7 +54,7 @@ const cards = [
   {
     title: 'Shiajinagar',
     sold:12,
-    reamning:231,
+    remaining:231,
     rating:3,
     subtitle: '15 completed tasks4',
     icon: 'settings-gear-65',
@@ -160,8 +160,8 @@ class Dashboard extends React.Component {
            <Text size={BASE_SIZE * 0.875} muted>{props.sold}Flats</Text>
           </Block>
           <Block row>
-           <Text style={{fontWeight: 'bold'}}>Reamning:</Text>
-           <Text size={BASE_SIZE * 0.875} muted>{props.reamning}Flats</Text>
+           <Text style={{fontWeight: 'bold'}}>remaining:</Text>
+           <Text size={BASE_SIZE * 0.875} muted>{props.remaining}Flats</Text>
           </Block><Block row>
            <Text style={{fontWeight: 'bold'}}>Rating:</Text>
            <Text size={BASE_SIZE * 0.875} muted>{props.rating}</Text>

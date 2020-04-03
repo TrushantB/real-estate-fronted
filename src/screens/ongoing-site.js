@@ -23,7 +23,7 @@ const cards = [
     location: 'Kothrud, Kare Nagar',
     price:'10,00,000',
     rating:4,
-    reamning:303,
+    remaining:303,
     sold:201
   },
   {
@@ -35,7 +35,7 @@ const cards = [
     location: 'Los Angeles, CA',
     price:'10,00,000',
     rating:5,
-    reamning:37,
+    remaining:37,
     sold:201
   },
   {
@@ -47,7 +47,7 @@ const cards = [
     location: 'Deccan,J.m.road',
     price:'20,00,000',
     rating:4,
-    reamning:327,
+    remaining:327,
     sold:301
     // padded: true,
   },
@@ -60,7 +60,7 @@ const cards = [
     location: 'Los Angeles, CA',
     price:'30,00,000',
     rating:4,
-    reamning:37,
+    remaining:37,
     sold:201
     // padded: true,
   },
@@ -72,7 +72,7 @@ const cards = [
     caption: '138 minutes ago',
     price:'40,00,000',
     rating:4.3,
-    reamning:37,
+    remaining:37,
     sold:201
     // full: true,
   },
@@ -84,7 +84,7 @@ const cards = [
     caption: '58 minutes ago',
     price:'50,00,000',
     rating:3,
-    reamning:37,
+    remaining:37,
     sold:201
     // full: true,
   },
@@ -149,8 +149,8 @@ export default class OngoingSite extends React.Component {
                   <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 15}}>Sold:</Text>
                   <Text size={BASE_SIZE * 0.875} muted>{card.sold} Flats</Text>
 
-                  <Text style={{fontWeight: 'bold',marginLeft: 15}}>Reamning:</Text>
-                  <Text size={BASE_SIZE * 0.875} muted>{card.reamning} Flats</Text>
+                  <Text style={{fontWeight: 'bold',marginLeft: 15}}>Remaining:</Text>
+                  <Text size={BASE_SIZE * 0.875} muted>{card.remaining} Flats</Text>
                   </Block>
               </Block>
               </Card>

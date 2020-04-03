@@ -25,13 +25,13 @@ const Header = ({ title }) => (
     <Text h3></Text>
   </Block>
 );
-export default class Contact extends React.Component {
+export default class Email extends React.Component {
   render() {
     const { navigation } = this.props;
     return (
       <Block safe flex style={{ backgroundColor: theme.COLORS.WHITE }}>
         <NavBar
-          title="Contact"
+          title="Email"
           left={(
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
               <Icon 
@@ -52,41 +52,27 @@ export default class Contact extends React.Component {
            behavior="height"
            keyboardVerticalOffset={5}>
           <Block flex middle>
-          <Input
-                rounded
-                placeholder="First name"
-                autoCapitalize="none"
-                style={{ width: width * 0.9 }}
-                onChangeText={text => handleChange('name', text)}
-              />
-              <Input
-                rounded
-                placeholder="Last name"
-                autoCapitalize="none"
-                style={{ width: width * 0.9 }}
-              // onChangeText={text => handleChange('lastName', text)}
-              />
-              <Input
-                rounded
-                placeholder="Email"
-                autoCapitalize="none"
-                style={{ width: width * 0.9 }}
-              // onChangeText={text => handleChange('lastName', text)}
-              />
-                <Input
-                rounded
-                placeholder="Contact number"
-                autoCapitalize="none"
-                style={{ width: width * 0.9 }}
-              // onChangeText={text => handleChange('lastName', text)}
-              />
-              <Input
-                rounded
-                placeholder="Write your message here"
-                autoCapitalize="none"
-                style={{ width: width * 0.9 , height: 150}}
-              // onChangeText={text => handleChange('lastName', text)}
-              />
+            <Input
+            rounded
+            placeholder="To"
+            autoCapitalize="none"
+            style={{ width: width * 0.9 }}
+            // onChangeText={text => handleChange('name', text)}
+            />
+            <Input
+            rounded
+            placeholder="Subject"
+            autoCapitalize="none"
+            style={{ width: width * 0.9 }}
+            // onChangeText={text => handleChange('lastName', text)}
+            />
+            <Input
+            rounded
+            placeholder="Write your message here"
+            autoCapitalize="none"
+            style={{ width: width * 0.9 , height: 150}}
+            // onChangeText={text => handleChange('lastName', text)}
+            />
             </Block>
             <Block flex center style={{ marginBottom: 20 }}>
             <Button
@@ -96,7 +82,7 @@ export default class Contact extends React.Component {
               color="info"
               onPress={() => handleSignUp}
             >
-              Submit
+              Send
             </Button>
             </Block>
             </KeyboardAvoidingView>

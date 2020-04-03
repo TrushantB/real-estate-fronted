@@ -8,9 +8,9 @@ import {
   DrawerItems,
 } from 'react-navigation';
 
-import email from 'react-native-email'
+// import email from 'react-native-email'
 
-import { Block, Icon, Text } from 'galio-framework';
+import { Block, Icon, Text,Accordion } from 'galio-framework';
 // screens
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
@@ -19,9 +19,10 @@ import Notification from './src/screens/notification';
 import theme from './src/theme';
 // import Matrix from './src/screens/matrix';
 import Contact from './src/screens/contact';
-import Message from './src/screens/message';
 import Dashboard from './src/screens/dashboard';
 import Enquiry from './src/screens/enquiry';
+import Email from './src/screens/email';
+import SMS from './src/screens/sms';
 
 const GalioDrawer = props => (
   <SafeAreaView style={styles.drawer} forceInset={{ top: 'always', horizontal: 'never' }}>
@@ -38,6 +39,17 @@ const GalioDrawer = props => (
   </SafeAreaView>
 );
 
+const data = [
+  { title: "First Chapter", content: "Lorem ipsum dolor sit amet", 
+    icon: {
+      name: 'keyboard-arrow-up',
+      family: 'material',
+      size: 16,
+    } 
+ },
+  { title: "2nd Chapter", content: "Lorem ipsum dolor sit amet" },
+  { title: "3rd Chapter", content: "Lorem ipsum dolor sit amet" }
+];
 const styles = StyleSheet.create({
   drawer: {
     flex: 1,
@@ -80,62 +92,77 @@ MenuIcon.propTypes = {
   family: PropTypes.string,
   focused: PropTypes.bool,
 };
-
+const MyDrawer = (props) => (
+  <Block style={{ height: 200 }}>
+      <Accordion dataArray={data} />
+    </Block>
+)
 const screens = {
   OngoingSite: {
     screen: OngoingSite,
     navigationOptions: {
       drawerLabel: 'Ongoing Sites',
-      drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+      
+      drawerIcon: props => <MenuIcon name="hourglass-half" family="font-awesome" focused={props.focused} />,
+      
     },
   },
   Enquiry: {
     screen: Enquiry,
     navigationOptions: {
       drawerLabel: 'Enquiry',
-      drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+      drawerIcon: props => <MenuIcon name="phone" family="font-awesome" focused={props.focused} />,
     },
   },
   Notification: {
     screen: Notification,
     navigationOptions: {
       drawerLabel: 'Notification',
-      drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+      drawerIcon: props => <MenuIcon name="bell" family="font-awesome" focused={props.focused} />,
     },
   },
   Contact: {
     screen: Contact,
     navigationOptions: {
       drawerLabel: 'Contact',
-      drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+      drawerIcon: props => <MenuIcon name="address-book-o" family="font-awesome" focused={props.focused} />,
     },
   },
-  Message: {
-    screen: Message,
+  Email: {
+    screen: Email,
     navigationOptions: {
-      drawerLabel: 'Message',
+      drawerLabel: 'Email',
+      drawerIcon: props => <MenuIcon name="envelope" family="font-awesome" focused={props.focused} />,
+    },
+    
+  },
+  SMS: {
+    screen: SMS,
+    navigationOptions: {
+      drawerLabel: 'SMS',
       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
     },
+    
   },
   Login: {
     screen: Login,
     navigationOptions: {
-      drawerLabel: 'Login Screen',
-      drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+      drawerLabel: 'Login',
+      drawerIcon: props => <MenuIcon name="user" family="font-awesome" focused={props.focused} />,
     },
   },
   Register: {
     screen: Register,
     navigationOptions: {
-      drawerLabel: 'Register Screen',
-      drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+      drawerLabel: 'Register',
+      drawerIcon: props => <MenuIcon name="user-plus" family="font-awesome" focused={props.focused} />,
     },
   },
   Home: {
     screen: Dashboard,
     navigationOptions: {
       drawerLabel: 'Dashboard',
-      drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+      drawerIcon: props => <MenuIcon name="area-chart" family="font-awesome" focused={props.focused} />,
     },
   },
   
@@ -194,6 +221,6 @@ const options = {
   },
 };
 
-const GalioApp = createDrawerNavigator(screens, options);
+const GalioApp = createDrawerNavigator(screens, options,);
 
 export default GalioApp;

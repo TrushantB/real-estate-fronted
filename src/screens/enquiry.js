@@ -147,28 +147,28 @@ export default class Enquiry extends React.Component {
                 placeholder="Last name"
                 autoCapitalize="none"
                 style={{ width: width * 0.9 }}
-                onChangeText={text => handleChange('lastName', text)}
+              // onChangeText={text => handleChange('lastName', text)}
               />
               <Input
                 rounded
                 placeholder="Email"
                 autoCapitalize="none"
                 style={{ width: width * 0.9 }}
-                onChangeText={text => handleChange('lastName', text)}
+              // onChangeText={text => handleChange('lastName', text)}
               />
                 <Input
                 rounded
                 placeholder="Contact number"
                 autoCapitalize="none"
                 style={{ width: width * 0.9 }}
-                onChangeText={text => handleChange('lastName', text)}
+              // onChangeText={text => handleChange('lastName', text)}
               />
               <Input
                 rounded
                 placeholder="Write your message here"
                 autoCapitalize="none"
                 style={{ width: width * 0.9 , height: 150}}
-                onChangeText={text => handleChange('lastName', text)}
+              // onChangeText={text => handleChange('lastName', text)}
               />
             </Block>
             <Block flex center style={{ marginBottom: 20 }}>
