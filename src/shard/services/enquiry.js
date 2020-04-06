@@ -4,6 +4,10 @@ const baseService = new BaseService();
 export default class EnquiryService extends React.Component {
 
 getEnquiryData() {
-    baseService.getData('projects');
+   return baseService.getData('enquiry');
 }
+
+postnquiryData() {
+    return baseService.postData('enquiry');
+ }
 }

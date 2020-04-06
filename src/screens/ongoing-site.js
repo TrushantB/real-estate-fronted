@@ -9,6 +9,8 @@ import {
   Card, Block, NavBar, Icon,Text
 } from 'galio-framework';
 import theme from '../theme';
+import OngoingService from '../shard/services/ongoing-site';
+let ongoingService=new OngoingService()
 const baseService=new BaseService();
 const { width } = Dimensions.get('screen');
 const BASE_SIZE = theme.SIZES.BASE;
@@ -97,6 +99,10 @@ export default class OngoingSite extends React.Component {
     //   console.log(response.data);
       
     // });
+    // ongoingService.getOngoingSiteData().then((response) => {
+    //   console.log(response.data);
+      
+    // })
     const { navigation } = this.props;
     return (
       <Block safe flex style={{ backgroundColor: theme.COLORS.WHITE }}>

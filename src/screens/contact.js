@@ -52,16 +52,9 @@ export default class Contact extends React.Component {
            behavior="height"
            keyboardVerticalOffset={5}>
           <Block flex middle>
-          <Input
-                rounded
-                placeholder="First name"
-                autoCapitalize="none"
-                style={{ width: width * 0.9 }}
-                onChangeText={text => handleChange('name', text)}
-              />
               <Input
                 rounded
-                placeholder="Last name"
+                placeholder="Your name"
                 autoCapitalize="none"
                 style={{ width: width * 0.9 }}
               // onChangeText={text => handleChange('lastName', text)}

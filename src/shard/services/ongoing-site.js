@@ -4,6 +4,6 @@ const baseService = new BaseService();
 export default class OngoingService extends React.Component {
 
 getOngoingSiteData() {
-    baseService.getData('projects');
+   return baseService.getData('sites');
 }
 }

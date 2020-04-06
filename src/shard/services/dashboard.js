@@ -4,6 +4,9 @@ const baseService = new BaseService();
 export default class DashboardService extends React.Component {
 
 getDashboardData() {
-    baseService.getData('projects');
+  return  baseService.getData('users');
+}
+postDashboardData(data) {
+  return baseService.postData('users',data);
 }
 }

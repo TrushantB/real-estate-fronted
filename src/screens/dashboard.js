@@ -13,7 +13,6 @@ import {
 } from 'galio-framework';
 import theme from '../theme';
 
-
 const BASE_SIZE = theme.SIZES.BASE;
 const GRADIENT_BLUE = ['#6B84CA', '#8F44CE'];
 const GRADIENT_PINK = ['#D442F8', '#B645F5', '#9B40F8'];
@@ -64,6 +63,7 @@ const cards = [
 const statsTitles = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
 
 class Dashboard extends React.Component {
+ 
   renderHeader = () => (
     <NavBar
       title="Dashboard"

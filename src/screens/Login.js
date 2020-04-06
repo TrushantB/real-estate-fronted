@@ -24,7 +24,6 @@ class Login extends React.Component {
 
   }
   componentWillMount() {
-    AsyncStorage.clear();
     AsyncStorage.getItem('token').then((token) => {
       // this.setState({token})
       // baseService.setToken(token)
@@ -39,10 +38,14 @@ class Login extends React.Component {
   }
   login() {
     authService.login({username:this.state.email,password:this.state.password}).then((response) => {
-     console.log(response);
-     
-      AsyncStorage.setItem('token',response.token).then();
-      this.props.history.push('drawer')
+     console.log(response.data);
+     if(response.data) {
+       this.props.history.push('drawer')
+       AsyncStorage.setItem('token',response.data.token).then();
+     }
+     else {
+       alert(response);
+     }
     })
   }
   render() {

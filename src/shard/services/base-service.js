@@ -3,28 +3,29 @@ import axios from 'axios';
 import { environment } from '../../../environment/environment';
 const headers = {
    'Content-Type': 'application/json',
-   
  };
-export default class BaseService extends React.Component {
-   state={
-      token:''
-   }
 
+export default class BaseService extends React.Component {
+   
+
+login(url,data) {
+   return axios.post(`${environment.api}/${url}`,data);
+}
 getData(url) {
-   return axios.get(`${environment.api}/${url}`);
+   headers.Authorization=environment.token;
+   return axios.get(`${environment.api}/${url}`,{headers:headers});
 }
 
 postData(url,data) {
-    return axios.post(`${environment.api}/${url}`,data,{
-      headers: headers
-    });
+   headers.Authorization=environment.token;
+    return axios.post(`${environment.api}/${url}`,data,{headers: headers});
  }
 
- setToken(token) {
-  this.setState({token})
- }
+//  setToken(token) {
+//   this.setState({token})
+//  }
 
  getToken() {
-    return this.state.token;
+    return environment;
  }
 }

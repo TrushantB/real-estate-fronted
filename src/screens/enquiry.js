@@ -14,7 +14,8 @@ import {
   Block, Button, Input, Text, NavBar,Icon
 } from 'galio-framework';
 import theme from '../theme';
-
+import EnquiryService from '../shard/services/enquiry';
+let enquiryService=new EnquiryService();
 const { width } = Dimensions.get('window');
 
 const MARGIN_LEFT = '5%';
@@ -95,10 +96,36 @@ const Header = ({ title }) => (
 );
 export default class Enquiry extends React.Component {
   state={
-    selectedSite:''
+    selectedSite:'',
+    name:'',
+    email:'',
+    contact:'',
+    message:'',
+    siteId:''
+  }
+  handleChange(name,value) {
+    this.setState({[name]:value})
+  }
+  submit() {
+    let { name,contact,email,message } = this.state;
+    let item = {
+      "name": name,
+      "contact":contact,
+      "email": email,
+      "feedback": message
+    }
+    console.log(item);
+    
+    enquiryService.postnquiryData(item).then((response) => {
+      console.log(response);
+      this.setState({name:'',email:'',contact:'',message:''})
+    })
+    
   }
   render() {
     const { navigation } = this.props;
+    let { name,contact,email,message } = this.state;
+
     return (
       <Block safe flex style={{ backgroundColor: theme.COLORS.WHITE }}>
         <NavBar
@@ -137,38 +164,35 @@ export default class Enquiry extends React.Component {
             </Picker>
               <Input
                 rounded
-                placeholder="First name"
+                placeholder="Your name"
+                value={name}
                 autoCapitalize="none"
                 style={{ width: width * 0.9 }}
-                onChangeText={text => handleChange('name', text)}
+              onChangeText={text => this.handleChange('name', text)}
               />
               <Input
                 rounded
-                placeholder="Last name"
-                autoCapitalize="none"
-                style={{ width: width * 0.9 }}
-              // onChangeText={text => handleChange('lastName', text)}
-              />
-              <Input
-                rounded
+                value={email}
                 placeholder="Email"
                 autoCapitalize="none"
                 style={{ width: width * 0.9 }}
-              // onChangeText={text => handleChange('lastName', text)}
+              onChangeText={text => this.handleChange('email', text)}
               />
                 <Input
                 rounded
                 placeholder="Contact number"
+                value={contact}
                 autoCapitalize="none"
                 style={{ width: width * 0.9 }}
-              // onChangeText={text => handleChange('lastName', text)}
+              onChangeText={text => this.handleChange('contact', text)}
               />
               <Input
                 rounded
                 placeholder="Write your message here"
+                value={message}
                 autoCapitalize="none"
                 style={{ width: width * 0.9 , height: 150}}
-              // onChangeText={text => handleChange('lastName', text)}
+              onChangeText={text => this.handleChange('message', text)}
               />
             </Block>
             <Block flex center style={{ marginBottom: 20 }}>
@@ -177,7 +201,7 @@ export default class Enquiry extends React.Component {
               style={styles.button}
               round
               color="info"
-              onPress={() => handleSignUp}
+              onPress={() => this.submit()}
             >
               Submit
             </Button>

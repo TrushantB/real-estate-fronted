@@ -9,6 +9,6 @@ registration(data) {
 }
 
 login(data) {
-    return baseService.postData('login',data)
+    return baseService.login('login',data)
 }
 }
