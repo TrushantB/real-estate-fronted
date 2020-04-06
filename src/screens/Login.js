@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Alert, Dimensions, KeyboardAvoidingView, StyleSheet, Platform,
+  Alert, Dimensions, KeyboardAvoidingView, StyleSheet, Platform,AsyncStorage
 } from 'react-native';
 
 // galio component
@@ -8,19 +8,43 @@ import {
   Block, Button, Input, NavBar, Text,Icon
 } from 'galio-framework';
 import theme from '../theme';
+import BaseService from '../shard/services/base-service';
+import SharedComponent from '../shard/components/shared';
+import AuthService from '../shard/services/auth';
+const authService=new AuthService();
+let baseService=new SharedComponent();
 
 const { height, width } = Dimensions.get('window');
 
 class Login extends React.Component {
+
   state = {
-    email: '-',
-    password: '-',
+    email: '',
+    password: '',
+
+  }
+  componentWillMount() {
+    AsyncStorage.clear();
+    AsyncStorage.getItem('token').then((token) => {
+      // this.setState({token})
+      // baseService.setToken(token)
+      if(token) {
+        this.props.history.push('drawer')
+      }
+    })
   }
 
   handleChange = (name, value) => {
     this.setState({ [name]: value });
   }
-
+  login() {
+    authService.login({username:this.state.email,password:this.state.password}).then((response) => {
+     console.log(response);
+     
+      AsyncStorage.setItem('token',response.token).then();
+      this.props.history.push('drawer')
+    })
+  }
   render() {
     const { navigation } = this.props;
     const { email, password } = this.state;
@@ -118,15 +142,11 @@ class Login extends React.Component {
               <Button
                 round
                 color="error"
-                onPress={() => Alert.alert(
-                  'Sign in action',
-                  `Email: ${email}
-Password: ${password}`,
-                )}
+                onPress={() => this.login()}
               >
                 Sign in
               </Button>
-              <Button color="transparent" shadowless onPress={() => navigation.navigate('Register')}>
+              <Button color="transparent" shadowless onPress={() => this.props.history.push('/register')}>
                 <Text center color={theme.COLORS.ERROR} size={theme.SIZES.FONT * 0.75}>
                   {"Don't have an account? Sign Up"}
                 </Text>

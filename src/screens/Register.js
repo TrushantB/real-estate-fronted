@@ -5,29 +5,50 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
 } from 'react-native';
 // galio component
 import {
   Block, Button, Input, Text, NavBar,
 } from 'galio-framework';
 import theme from '../theme';
-
+import AuthService from '../shard/services/auth';
+const authService=new AuthService();
 const { height, width } = Dimensions.get('window');
 
-class Login extends React.Component {
+class Register extends React.Component {
   state = {
-    user: '-',
-    email: '-',
-    password: '-',
+    name: '',
+    contact: '',
+    username: '',
+    email: '',
+    password: '',
   }
 
   handleChange = (name, value) => {
     this.setState({ [name]: value });
   }
 
+  registration = () => {
+    let { name ,contact, username,email,password} = this.state;
+    let item = {
+      name:name,
+      contact:contact,
+      email:email,
+      username:username,
+      password:password
+    }
+    console.log(item);
+    
+    authService.registration(item).then((response) => {
+      console.log(response);
+      this.props.history.push('/')
+      this.setState({name:'',contact:'',email:'',username:'',password:''})
+      
+    });
+  }
   render() {
     const { navigation } = this.props;
-    const { user, email, password } = this.state;
 
     return (
       <Block safe flex style={{ backgroundColor: theme.COLORS.WHITE }}>
@@ -36,7 +57,8 @@ class Login extends React.Component {
           onLeftPress={() => navigation.openDrawer()}
           style={Platform.OS === 'android' ? { marginTop: theme.SIZES.BASE } : null}
           />
-        <KeyboardAvoidingView style={styles.container} behavior="height" enabled>
+          <ScrollView>
+          {/* <KeyboardAvoidingView style={styles.container} behavior="height" enabled> */}
           <Block
             flex
             center
@@ -102,18 +124,37 @@ class Login extends React.Component {
 
           <Block flex={2} center space="between">
             <Block flex={2}>
+            <Input
+                rounded
+                placeholder="Name"
+                value={this.state.name}
+                autoCapitalize="none"
+                style={{ width: width * 0.9 }}
+                onChangeText={text => this.handleChange('name', text)}
+              />
+            <Input
+                rounded
+                placeholder="Contact"
+                autoCapitalize="none"
+                value={this.state.contact}
+
+                style={{ width: width * 0.9 }}
+                onChangeText={text => this.handleChange('contact', text)}
+              />
               <Input
                 rounded
                 placeholder="Username"
                 autoCapitalize="none"
+                value={this.state.username}
                 style={{ width: width * 0.9 }}
-                onChangeText={text => this.handleChange('user', text)}
+                onChangeText={text => this.handleChange('username', text)}
               />
               <Input
                 rounded
                 type="email-address"
                 placeholder="Email"
                 autoCapitalize="none"
+                value={this.state.email}
                 style={{ width: width * 0.9 }}
                 onChangeText={text => this.handleChange('email', text)}
               />
@@ -122,6 +163,7 @@ class Login extends React.Component {
                 password
                 viewPass
                 placeholder="Password"
+                value={this.state.password}
                 style={{ width: width * 0.9 }}
                 onChangeText={text => this.handleChange('password', text)}
               />
@@ -130,25 +172,22 @@ class Login extends React.Component {
               <Button
                 round
                 color="error"
-                onPress={() => Alert.alert(
-                  'Sign up action',
-                  `
-                  Username: ${user}
-                  Email: ${email}
-                  Password: ${password}`,
-                )}
+                onPress={() => this.registration()}
+
               >
                 Sign up
               </Button>
-              <Button color="transparent" shadowless onPress={() => navigation.navigate('Login')}>
+              <Button color="transparent" shadowless onPress={() => this.props.history.push('/')}>
                 <Text center color={theme.COLORS.ERROR} size={theme.SIZES.FONT * 0.75}>
                   Already have an account? Sign In
                 </Text>
               </Button>
             </Block>
           </Block>
-        </KeyboardAvoidingView>
-      </Block>
+        {/* </KeyboardAvoidingView> */}
+
+          </ScrollView>
+             </Block>
     );
   }
 }
@@ -170,4 +209,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Register;
