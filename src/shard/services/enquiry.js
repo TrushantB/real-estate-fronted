@@ -7,7 +7,7 @@ getEnquiryData() {
    return baseService.getData('enquiry');
 }
 
-postnquiryData() {
-    return baseService.postData('enquiry');
+postnquiryData(data) {
+    return baseService.postData('enquiry',data);
  }
 }

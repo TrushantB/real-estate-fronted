@@ -5,6 +5,6 @@ const baseService = new BaseService();
 export default class NotificationService extends React.Component {
 
 getNotificationData() {
-    baseService.getData('projects');
+   return baseService.getData('notifications');
 }
 }

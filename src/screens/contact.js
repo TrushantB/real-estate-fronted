@@ -13,6 +13,9 @@ import {
   Block, Button, Input, Text, NavBar,Icon
 } from 'galio-framework';
 import theme from '../theme';
+import ContactService from '../shard/services/contact';
+
+const contactService=new ContactService();
 
 const { width } = Dimensions.get('window');
 
@@ -26,7 +29,32 @@ const Header = ({ title }) => (
   </Block>
 );
 export default class Contact extends React.Component {
+  state={
+    name:'',
+    email:'',
+    contact:'',
+    message:''
+  }
+  submit() {
+    let { name,contact,email,message } = this.state;
+    let item = {
+      name: name,
+      contact:contact,
+      email: email,
+      feedback: message
+    }
+    contactService.postContactData(item).then((response) => {
+      console.log(response.data);
+      this.setState({name:'',email:'',contact:'',message:''})
+    })
+  }
+
+  handleChange(name,value) {
+    this.setState({[name]:value})
+  }
+
   render() {
+    
     const { navigation } = this.props;
     return (
       <Block safe flex style={{ backgroundColor: theme.COLORS.WHITE }}>
@@ -52,33 +80,37 @@ export default class Contact extends React.Component {
            behavior="height"
            keyboardVerticalOffset={5}>
           <Block flex middle>
-              <Input
+          <Input
                 rounded
                 placeholder="Your name"
+                value={name}
                 autoCapitalize="none"
                 style={{ width: width * 0.9 }}
-              // onChangeText={text => handleChange('lastName', text)}
+              onChangeText={text => this.handleChange('name', text)}
               />
               <Input
                 rounded
+                value={email}
                 placeholder="Email"
                 autoCapitalize="none"
                 style={{ width: width * 0.9 }}
-              // onChangeText={text => handleChange('lastName', text)}
+              onChangeText={text => this.handleChange('email', text)}
               />
                 <Input
                 rounded
                 placeholder="Contact number"
+                value={contact}
                 autoCapitalize="none"
                 style={{ width: width * 0.9 }}
-              // onChangeText={text => handleChange('lastName', text)}
+              onChangeText={text => this.handleChange('contact', text)}
               />
               <Input
                 rounded
                 placeholder="Write your message here"
+                value={message}
                 autoCapitalize="none"
                 style={{ width: width * 0.9 , height: 150}}
-              // onChangeText={text => handleChange('lastName', text)}
+              onChangeText={text => this.handleChange('message', text)}
               />
             </Block>
             <Block flex center style={{ marginBottom: 20 }}>
@@ -87,7 +119,7 @@ export default class Contact extends React.Component {
               style={styles.button}
               round
               color="info"
-              onPress={() => handleSignUp}
+              onPress={() => this.submit()}
             >
               Submit
             </Button>

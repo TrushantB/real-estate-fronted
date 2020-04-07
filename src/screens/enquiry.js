@@ -109,15 +109,21 @@ export default class Enquiry extends React.Component {
   submit() {
     let { name,contact,email,message } = this.state;
     let item = {
-      "name": name,
-      "contact":contact,
-      "email": email,
-      "feedback": message
+      name: name,
+      contact:contact,
+      email: email,
+      feedback: message
     }
-    console.log(item);
+    // let item ={
+    //   "contact": "9988776655",
+    //   "email": "trush@trush123.com",
+    //   "feedback": "message",
+    //   "name": "trushant",
+    // }
+    // console.log(item);
     
     enquiryService.postnquiryData(item).then((response) => {
-      console.log(response);
+      console.log(response.data);
       this.setState({name:'',email:'',contact:'',message:''})
     })
     
