@@ -15,6 +15,8 @@ import {
 } from 'galio-framework';
 import theme from '../theme';
 import EnquiryService from '../shard/services/enquiry';
+import OngoingService from '../shard/services/ongoing-site';
+let ongoingService=new OngoingService();
 let enquiryService=new EnquiryService();
 const { width } = Dimensions.get('window');
 
@@ -101,18 +103,29 @@ export default class Enquiry extends React.Component {
     email:'',
     contact:'',
     message:'',
-    siteId:''
+    siteId:'',
+    dataSource:[]
+  }
+componentWillMount() {
+    ongoingService.getOngoingSiteData().then((response) => {
+      console.log(response.data);
+      
+     this.setState({dataSource:response.data})
+    })
   }
   handleChange(name,value) {
     this.setState({[name]:value})
   }
   submit() {
-    let { name,contact,email,message } = this.state;
+    let { name,contact,email,message ,selectedSite} = this.state;
     let item = {
       name: name,
       contact:contact,
       email: email,
-      feedback: message
+      feedback: message,
+      siteId:selectedSite,
+      isEquiry: true,
+      actiontaken: false,
     }
     // let item ={
     //   "contact": "9988776655",
@@ -123,7 +136,7 @@ export default class Enquiry extends React.Component {
     // console.log(item);
     
     enquiryService.postnquiryData(item).then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       this.setState({name:'',email:'',contact:'',message:''})
     })
     
@@ -163,8 +176,10 @@ export default class Enquiry extends React.Component {
             >
               <Picker.Item label="Select site" value="" />
               {
-                cards.map((item,index) => {
-                  return <Picker.Item label={item.title} value={item.title}  key={index}/>
+                
+                this.state.dataSource.map((item,index) => {
+                  console.log(item)
+                  return <Picker.Item label={item.sitename} value={item._id}  key={index}/>
                 })
               }
             </Picker>

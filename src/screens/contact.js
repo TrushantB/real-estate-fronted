@@ -41,7 +41,9 @@ export default class Contact extends React.Component {
       name: name,
       contact:contact,
       email: email,
-      feedback: message
+      feedback: message,
+      isEquiry: false,
+      actiontaken: false,
     }
     contactService.postContactData(item).then((response) => {
       console.log(response.data);
@@ -54,7 +56,7 @@ export default class Contact extends React.Component {
   }
 
   render() {
-    
+    let { name,contact,email,message } = this.state;
     const { navigation } = this.props;
     return (
       <Block safe flex style={{ backgroundColor: theme.COLORS.WHITE }}>

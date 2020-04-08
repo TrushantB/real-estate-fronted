@@ -4,9 +4,9 @@ const baseService = new BaseService();
 export default class ContactService extends React.Component {
 
 getContactData() {
-   return baseService.getData('projects');
+   return baseService.getData('enquiry');
 }
 postContactData(data) {
-    return baseService.postData('contact',data);
+    return baseService.postData('enquiry',data);
  }
 }
