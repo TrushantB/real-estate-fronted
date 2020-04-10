@@ -42,7 +42,7 @@ class Register extends React.Component {
     
     authService.registration(item).then((response) => {
       console.log(response);
-      this.props.history.push('/')
+      this.props.navigation.navigate('Login');
       this.setState({name:'',contact:'',email:'',username:'',password:''})
       
     });
@@ -177,7 +177,7 @@ class Register extends React.Component {
               >
                 Sign up
               </Button>
-              <Button color="transparent" shadowless onPress={() => this.props.history.push('/')}>
+              <Button color="transparent" shadowless onPress={() => this.props.navigation.navigate('Login')}>
                 <Text center color={theme.COLORS.ERROR} size={theme.SIZES.FONT * 0.75}>
                   Already have an account? Sign In
                 </Text>

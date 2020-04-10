@@ -8,8 +8,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import {
   Card, Block, NavBar, Icon,Text
 } from 'galio-framework';
-import theme from '../theme';
-import NotificationService from '../shard/services/notification';
+import theme from '../../theme';
+import NotificationService from '../../src/shard/services/notification';
 let notificationService=new NotificationService();
 const { width } = Dimensions.get('screen');
 const BASE_SIZE = theme.SIZES.BASE;

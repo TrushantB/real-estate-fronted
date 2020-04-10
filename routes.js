@@ -14,8 +14,8 @@ import { Block, Icon, Text,Accordion } from 'galio-framework';
 // screens
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
-import OngoingSite from './src/screens/ongoing-site';
-import Notification from './src/screens/notification';
+// import OngoingSite from './src/screens/ongoing-sites';
+// import Notification from './src/screens/notification';
 import theme from './src/theme';
 // import Matrix from './src/screens/matrix';
 import Contact from './src/screens/contact';
@@ -23,7 +23,8 @@ import Dashboard from './src/screens/dashboard';
 import Enquiry from './src/screens/enquiry';
 import Email from './src/screens/email';
 import SMS from './src/screens/sms';
-
+import OngoingSite from './src/screens/ongoing-sites/index';
+import Notification from './src/screens/notification/index';
 const GalioDrawer = props => (
   <SafeAreaView style={styles.drawer} forceInset={{ top: 'always', horizontal: 'never' }}>
     <Block space="between" row style={styles.header}>
@@ -144,7 +145,7 @@ const screens = {
       drawerIcon: props => <MenuIcon name="user-plus" family="font-awesome" focused={props.focused} />,
     },
   },
-  Home: {
+  Dashboard: {
     screen: Dashboard,
     navigationOptions: {
       drawerLabel: 'Dashboard',

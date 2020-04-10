@@ -58,6 +58,7 @@ export default class Contact extends React.Component {
   render() {
     let { name,contact,email,message } = this.state;
     const { navigation } = this.props;
+    console.log(navigation);
     return (
       <Block safe flex style={{ backgroundColor: theme.COLORS.WHITE }}>
         <NavBar

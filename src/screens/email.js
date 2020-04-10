@@ -13,6 +13,9 @@ import {
   Block, Button, Input, Text, NavBar,Icon
 } from 'galio-framework';
 import theme from '../theme';
+import EnquiryService from '../shard/services/enquiry';
+
+let enquiryService=new EnquiryService();
 
 const { width } = Dimensions.get('window');
 
@@ -26,7 +29,35 @@ const Header = ({ title }) => (
   </Block>
 );
 export default class Email extends React.Component {
+  state={
+    to:'',
+    from:'',
+    body:'',
+    subject:''
+  }
+
+  send() {
+    let { to,from,subject,body } = this.state;
+    
+    let item = {
+      to:to,
+      from:from,
+      subject:subject,
+      body:body
+    }
+    enquiryService.postEnquiryData(item).then((response) => {
+      this.setState({to:'',from:'',subject:'',body:''});
+      console.log(response.data);
+      
+    })
+
+  }
+
+  handleChange (name,text)  {
+    this.setState({[name]:text})
+  }
   render() {
+    let { to,from,subject,body } = this.state;
     const { navigation } = this.props;
     return (
       <Block safe flex style={{ backgroundColor: theme.COLORS.WHITE }}>
@@ -57,21 +88,32 @@ export default class Email extends React.Component {
             placeholder="To"
             autoCapitalize="none"
             style={{ width: width * 0.9 }}
-            // onChangeText={text => handleChange('name', text)}
+            value={to}
+            onChangeText={text => this.handleChange('to', text)}
+            />
+            <Input
+            rounded
+            placeholder="From"
+            autoCapitalize="none"
+            style={{ width: width * 0.9 }}
+            value={from}
+            onChangeText={text => this.handleChange('from', text)}
             />
             <Input
             rounded
             placeholder="Subject"
             autoCapitalize="none"
             style={{ width: width * 0.9 }}
-            // onChangeText={text => handleChange('lastName', text)}
+            value={subject}
+            onChangeText={text => this.handleChange('subject', text)}
             />
             <Input
             rounded
-            placeholder="Write your message here"
+            placeholder="Write your message here."
             autoCapitalize="none"
             style={{ width: width * 0.9 , height: 150}}
-            // onChangeText={text => handleChange('lastName', text)}
+            value={body}
+            onChangeText={text => this.handleChange('body', text)}
             />
             </Block>
             <Block flex center style={{ marginBottom: 20 }}>
@@ -80,7 +122,7 @@ export default class Email extends React.Component {
               style={styles.button}
               round
               color="info"
-              onPress={() => handleSignUp}
+              onPress={() => this.send()}
             >
               Send
             </Button>

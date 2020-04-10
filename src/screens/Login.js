@@ -8,12 +8,11 @@ import {
   Block, Button, Input, NavBar, Text,Icon
 } from 'galio-framework';
 import theme from '../theme';
-import BaseService from '../shard/services/base-service';
-import SharedComponent from '../shard/components/shared';
+// import BaseService from '../shard/services/base-service';
 import AuthService from '../shard/services/auth';
+import { environment } from '../../environment/environment';
+import Loading from '../shard/components/loading';
 const authService=new AuthService();
-let baseService=new SharedComponent();
-
 const { height, width } = Dimensions.get('window');
 
 class Login extends React.Component {
@@ -21,14 +20,17 @@ class Login extends React.Component {
   state = {
     email: '',
     password: '',
+    loading:true
 
   }
   componentWillMount() {
+    // AsyncStorage.clear()
     AsyncStorage.getItem('token').then((token) => {
       // this.setState({token})
       // baseService.setToken(token)
       if(token) {
-        this.props.history.push('drawer')
+        this.props.navigation.navigate('Home');
+        this.setState({loading:false})
       }
     })
   }
@@ -37,14 +39,18 @@ class Login extends React.Component {
     this.setState({ [name]: value });
   }
   login() {
-    authService.login({username:this.state.email,password:this.state.password}).then((response) => {
+    this.setState({loading:true})
+    authService.login({username:this.state.email,password:this.state.password}).then(async(response) => {
      console.log(response.data);
      if(response.data) {
-       this.props.history.push('drawer')
-       AsyncStorage.setItem('token',response.data.token).then();
+       environment.token=response.data.token
+       await AsyncStorage.setItem('token',response.data.token).then((res) => {
+        this.setState({loading:false})
+        this.props.navigation.navigate('Home');
+       });
      }
      else {
-       alert(response);
+       Alert.alert(response);
      }
     })
   }
@@ -149,7 +155,7 @@ class Login extends React.Component {
               >
                 Sign in
               </Button>
-              <Button color="transparent" shadowless onPress={() => this.props.history.push('/register')}>
+              <Button color="transparent" shadowless onPress={() => this.props.navigation.navigate('Register')}>
                 <Text center color={theme.COLORS.ERROR} size={theme.SIZES.FONT * 0.75}>
                   {"Don't have an account? Sign Up"}
                 </Text>
@@ -157,6 +163,7 @@ class Login extends React.Component {
             </Block>
           </Block>
         </KeyboardAvoidingView>
+        <Loading loading={this.state.loading}/>
       </Block>
     );
   }
