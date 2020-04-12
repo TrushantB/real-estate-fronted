@@ -14,6 +14,8 @@ import {
 } from 'galio-framework';
 import theme from '../theme';
 import ContactService from '../shard/services/contact';
+import Loading from '../shard/components/loading';
+import { environment } from '../../environment/environment';
 
 const contactService=new ContactService();
 
@@ -33,22 +35,24 @@ export default class Contact extends React.Component {
     name:'',
     email:'',
     contact:'',
-    message:''
+    message:'',
+    loading:false
   }
   submit() {
-    let { name,contact,email,message } = this.state;
+    let { contact,message } = this.state;
     let item = {
-      name: name,
+      name: JSON.parse(environment.userDetails).name,
       contact:contact,
-      email: email,
+      email: JSON.parse(environment.userDetails).email,
       feedback: message,
       isEquiry: false,
       actiontaken: false,
     }
+    this.setState({loading:true});
     contactService.postContactData(item).then((response) => {
-      console.log(response.data);
-      this.setState({name:'',email:'',contact:'',message:''})
-    })
+      this.setState({contact:'',message:'',loading:false});
+      this.props.navigation.navigate("Confirmation")
+    }).catch((err) => {console.log(err); this.setState({loading:false})})
   }
 
   handleChange(name,value) {
@@ -86,18 +90,20 @@ export default class Contact extends React.Component {
           <Input
                 rounded
                 placeholder="Your name"
-                value={name}
+                value={JSON.parse(environment.userDetails).name}
                 autoCapitalize="none"
                 style={{ width: width * 0.9 }}
-              onChangeText={text => this.handleChange('name', text)}
+                editable={false}
+              // onChangeText={text => this.handleChange('name', text)}
               />
               <Input
                 rounded
-                value={email}
+                value={JSON.parse(environment.userDetails).email}
                 placeholder="Email"
                 autoCapitalize="none"
                 style={{ width: width * 0.9 }}
-              onChangeText={text => this.handleChange('email', text)}
+                editable={false}
+              // onChangeText={text => this.handleChange('email', text)}
               />
                 <Input
                 rounded
@@ -129,6 +135,7 @@ export default class Contact extends React.Component {
             </Block>
             </KeyboardAvoidingView>
           </ScrollView>
+          <Loading loading={this.state.loading}/>
         </Block>
     );
   }

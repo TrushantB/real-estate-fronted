@@ -12,20 +12,17 @@ login(url,data) {
    return axios.post(`${environment.api}/${url}`,data);
 }
 getData(url) {
-   headers.Authorization=environment.token;
+   headers.Authorization=JSON.parse(environment.userDetails).token;
    return axios.get(`${environment.api}/${url}`,{headers:headers});
 }
 
 postData(url,data) {
-   headers.Authorization=environment.token;
+   headers.Authorization=JSON.parse(environment.userDetails).token;
     return axios.post(`${environment.api}/${url}`,data,{headers: headers});
  }
-
-//  setToken(token) {
-//   this.setState({token})
-//  }
-
- getToken() {
-    return environment;
+ putData(url,data) {
+   headers.Authorization=JSON.parse(environment.userDetails).token;
+   return axios.put(`${environment.api}/${url}`,data,{headers:headers});
  }
+ 
 }

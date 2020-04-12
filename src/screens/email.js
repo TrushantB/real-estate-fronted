@@ -14,6 +14,8 @@ import {
 } from 'galio-framework';
 import theme from '../theme';
 import EnquiryService from '../shard/services/enquiry';
+import Loading from '../shard/components/loading';
+import { environment } from '../../environment/environment';
 
 let enquiryService=new EnquiryService();
 
@@ -33,7 +35,8 @@ export default class Email extends React.Component {
     to:'',
     from:'',
     body:'',
-    subject:''
+    subject:'',
+    loading:false
   }
 
   send() {
@@ -41,16 +44,15 @@ export default class Email extends React.Component {
     
     let item = {
       to:to,
-      from:from,
+      from:JSON.parse(environment.userDetails).email,
       subject:subject,
       body:body
     }
-    enquiryService.postEnquiryData(item).then((response) => {
-      this.setState({to:'',from:'',subject:'',body:''});
-      console.log(response.data);
-      
-    })
-
+    this.setState({loading:true});
+    enquiryService.postMailData(item).then((response) => {
+      this.setState({to:'',subject:'',body:'',loading:false});
+      this.props.navigation.navigate("Confirmation")
+    }).catch((err) => {console.log(err); this.setState({loading:false})})
   }
 
   handleChange (name,text)  {
@@ -96,8 +98,9 @@ export default class Email extends React.Component {
             placeholder="From"
             autoCapitalize="none"
             style={{ width: width * 0.9 }}
-            value={from}
-            onChangeText={text => this.handleChange('from', text)}
+            value={JSON.parse(environment.userDetails).email}
+            editable={false}
+            // onChangeText={text => this.handleChange('from', text)}
             />
             <Input
             rounded
@@ -129,6 +132,7 @@ export default class Email extends React.Component {
             </Block>
             </KeyboardAvoidingView>
           </ScrollView>
+          <Loading loading={this.state.loading}/>
         </Block>
     );
   }

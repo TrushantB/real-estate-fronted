@@ -20,7 +20,6 @@ class Register extends React.Component {
   state = {
     name: '',
     contact: '',
-    username: '',
     email: '',
     password: '',
   }
@@ -30,22 +29,20 @@ class Register extends React.Component {
   }
 
   registration = () => {
-    let { name ,contact, username,email,password} = this.state;
+    let { name ,contact,email,password} = this.state;
     let item = {
       name:name,
       contact:contact,
       email:email,
-      username:username,
-      password:password
+      password:password,
+      loading:false
     }
-    console.log(item);
-    
+    this.setState({loading:true})
     authService.registration(item).then((response) => {
-      console.log(response);
+      this.setState({loading:false})
       this.props.navigation.navigate('Login');
-      this.setState({name:'',contact:'',email:'',username:'',password:''})
-      
-    });
+      this.setState({name:'',contact:'',email:'',password:''})
+    }).catch((err) => {console.log(err); this.setState({loading:false})});
   }
   render() {
     const { navigation } = this.props;
@@ -143,14 +140,6 @@ class Register extends React.Component {
               />
               <Input
                 rounded
-                placeholder="Username"
-                autoCapitalize="none"
-                value={this.state.username}
-                style={{ width: width * 0.9 }}
-                onChangeText={text => this.handleChange('username', text)}
-              />
-              <Input
-                rounded
                 type="email-address"
                 placeholder="Email"
                 autoCapitalize="none"
@@ -187,6 +176,7 @@ class Register extends React.Component {
         {/* </KeyboardAvoidingView> */}
 
           </ScrollView>
+          <Loading loading={this.state.loading}/>
              </Block>
     );
   }

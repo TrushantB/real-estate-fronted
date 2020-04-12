@@ -94,13 +94,13 @@ const screens = {
       
     },
   },
-  Enquiry: {
-    screen: Enquiry,
-    navigationOptions: {
-      drawerLabel: 'Enquiry',
-      drawerIcon: props => <MenuIcon name="phone" family="font-awesome" focused={props.focused} />,
-    },
-  },
+  // Enquiry: {
+  //   screen: Enquiry,
+  //   navigationOptions: {
+  //     drawerLabel: 'Enquiry',
+  //     drawerIcon: props => <MenuIcon name="phone" family="font-awesome" focused={props.focused} />,
+  //   },
+  // },
   Notification: {
     screen: Notification,
     navigationOptions: {
@@ -131,20 +131,20 @@ const screens = {
     },
     
   },
-  Login: {
-    screen: Login,
-    navigationOptions: {
-      drawerLabel: 'Login',
-      drawerIcon: props => <MenuIcon name="user" family="font-awesome" focused={props.focused} />,
-    },
-  },
-  Register: {
-    screen: Register,
-    navigationOptions: {
-      drawerLabel: 'Register',
-      drawerIcon: props => <MenuIcon name="user-plus" family="font-awesome" focused={props.focused} />,
-    },
-  },
+  // Login: {
+  //   screen: Login,
+  //   navigationOptions: {
+  //     drawerLabel: 'Login',
+  //     drawerIcon: props => <MenuIcon name="user" family="font-awesome" focused={props.focused} />,
+  //   },
+  // },
+  // Register: {
+  //   screen: Register,
+  //   navigationOptions: {
+  //     drawerLabel: 'Register',
+  //     drawerIcon: props => <MenuIcon name="user-plus" family="font-awesome" focused={props.focused} />,
+  //   },
+  // },
   Dashboard: {
     screen: Dashboard,
     navigationOptions: {

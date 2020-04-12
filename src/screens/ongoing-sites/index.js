@@ -22,7 +22,7 @@ export default class OngoingSite extends React.Component {
   componentDidMount() {
     ongoingService.getOngoingSiteData().then((response) => {
       this.setState({dataSource:response.data,loading:false})
-    })
+    }).catch((err) => {console.log(err); this.setState({loading:false})})
   }
 
   calculateTime(date) {
@@ -76,7 +76,7 @@ export default class OngoingSite extends React.Component {
                       footerStyle={card.full ? styles.full : null}
                        >
                       {card.full ? <LinearGradient colors={['transparent', 'rgba(0,0,0, 0.8)']} style={styles.gradient} /> : null}
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('OngoingSiteDetails',{ user: card })} key={`card-${id}`}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('OngoingSiteDetails',{ user: card ,navigation:this.props.navigation})} key={`card-${id}`}>
                      
                       <Block flex >
                         <Block row>
@@ -111,7 +111,7 @@ export default class OngoingSite extends React.Component {
             }
           </Block>
         </ScrollView>
-        { <Loading loading={this.state.loading}/>}
+        <Loading loading={this.state.loading}/>
       </Block>
     );
   }

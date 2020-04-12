@@ -5,7 +5,7 @@ import {
 
 // galio component
 import {
-  Block, Button, Input, NavBar, Text,Icon
+  Block, Button, Input, NavBar, Text
 } from 'galio-framework';
 import theme from '../theme';
 // import BaseService from '../shard/services/base-service';
@@ -25,13 +25,13 @@ class Login extends React.Component {
   }
   componentWillMount() {
     // AsyncStorage.clear()
-    AsyncStorage.getItem('token').then((token) => {
+    AsyncStorage.getItem('userDetails').then((userDetails) => {
       // this.setState({token})
       // baseService.setToken(token)
-      if(token) {
+      if(userDetails) {
         this.props.navigation.navigate('Home');
-        this.setState({loading:false})
       }
+      this.setState({loading:false})
     })
   }
 
@@ -39,12 +39,18 @@ class Login extends React.Component {
     this.setState({ [name]: value });
   }
   login() {
-    this.setState({loading:true})
-    authService.login({username:this.state.email,password:this.state.password}).then(async(response) => {
-     console.log(response.data);
+    this.setState({loading:true});
+    authService.login({email:this.state.email,password:this.state.password}).then(async(response) => {
+     console.log(response.data.token);
      if(response.data) {
-       environment.token=response.data.token
-       await AsyncStorage.setItem('token',response.data.token).then((res) => {
+       let userDetails={
+         id:response.data.userdetails._id,
+         name:response.data.userdetails.name,
+         email:response.data.userdetails.email,
+         token:response.data.token
+        }
+        await AsyncStorage.setItem('userDetails',JSON.stringify(userDetails)).then((response) => {
+          environment.userDetails=userDetails;
         this.setState({loading:false})
         this.props.navigation.navigate('Home');
        });
@@ -52,7 +58,7 @@ class Login extends React.Component {
      else {
        Alert.alert(response);
      }
-    })
+    }).catch((err) => {console.log(err); this.setState({loading:false})})
   }
   render() {
     const { navigation } = this.props;

@@ -8,12 +8,14 @@ import Register from './src/screens/Register';
 import BuilderApp from './routes';
 import OngoingSiteDetails from './src/screens/ongoing-sites/site-details';
 import NotificationDetails from './src/screens/notification/notification-details';
+import Confirmation from './src/shard/components/confirmation';
+import Enquiry from './src/screens/enquiry';
 export default class App extends React.Component {
  
   componentWillMount=async()=> {
     // AsyncStorage.clear()
-   await AsyncStorage.getItem('token').then((token) => {
-       environment.token=token;
+   await AsyncStorage.getItem('userDetails').then((userDetails) => {
+       environment.userDetails=userDetails;
    })
   }
   render() {
@@ -24,15 +26,23 @@ export default class App extends React.Component {
             header: null,
         },
         },
-        Signup: {
+        Register: {
           screen: Register,
-          
+          navigationOptions: {
+            header: null,
+        }
         },
         Home: {
           screen: BuilderApp,
           navigationOptions: {
             header: null,
         },
+        },
+        Enquiry: {
+          screen:Enquiry,
+          navigationOptions: {
+            title: 'Enquiry',
+        }, 
         },
         
         OngoingSiteDetails: {
@@ -47,6 +57,12 @@ export default class App extends React.Component {
             title: 'Notification Details',
         }, 
         },
+        Confirmation:{
+         screen:Confirmation,
+         navigationOptions: {
+          title: 'Thank You',
+      }, 
+        }
       });
     return (
       <NativeRouter>

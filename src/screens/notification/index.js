@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ScrollView, StyleSheet, Dimensions, Platform, TouchableOpacity, Alert
+  ScrollView, StyleSheet, Dimensions, Platform, TouchableOpacity, Alert,ListView
 } from 'react-native';
 
 // Galio components
@@ -10,6 +10,9 @@ import {
 import theme from '../../theme';
 import NotificationService from '../../shard/services/notification';
 import NotificationDetails from './notification-details';
+import Loading from '../../shard/components/loading';
+import { environment } from '../../../environment/environment';
+
 let notificationService=new NotificationService();
 const { width } = Dimensions.get('screen');
 // const BASE_SIZE = theme.SIZES.BASE;
@@ -19,14 +22,20 @@ export default class Notification extends React.Component {
   state={
     dataSource:[],
     showNotification:false,
-    notificationData:null
+    notificationData:null,
+    loading:true,
+    index:null
+    
   }
 
   componentDidMount() {
     notificationService.getNotificationData().then((response) => {
-       this.setState({dataSource:response.data})
-    })
+       this.setState({dataSource:response.data,loading:false})
+    }).catch((err) => {console.log(err); this.setState({loading:false})}
+    )
   }
+
+
 
   calculateTime(date) {
     const date1 = new Date(date);
@@ -38,6 +47,14 @@ export default class Notification extends React.Component {
 
   handleNotification = () => {
    this.setState({showNotification:false});
+   this.state.dataSource.splice(this.state.index,1);
+
+  //  notificationService.readNotificationData(this.state.notificationData._id,{userId:JSON.parse(environment.userDetails).id}).then((response) => {
+  //   console.log(response);
+  //   this.state.dataSource.splice(this.state.index,1);
+    
+  // }).catch((err) => {console.log(err); this.setState({loading:false})})
+
   }
 
   render() {
@@ -84,7 +101,7 @@ export default class Notification extends React.Component {
                   // footerStyle={card.full ? styles.full : null}
                 >
                   {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('NotificationDetails',{ user: card })}> */}
-                  <TouchableOpacity onPress={() => this.setState({showNotification:true,notificationData:card})}>
+                  <TouchableOpacity onPress={() => this.setState({showNotification:true,notificationData:card,index:id})}>
 
                     <Block flex >
                     <Block row>
@@ -102,6 +119,8 @@ export default class Notification extends React.Component {
               {this.state.showNotification && <NotificationDetails handleNotification={this.handleNotification} data={this.state.notificationData} calculateTime={this.calculateTime}/> }
           </Block>
         </ScrollView>
+        <Loading loading={this.state.loading} markAsRead={this.markAsRead}/>
+        
       </Block>
     );
   }

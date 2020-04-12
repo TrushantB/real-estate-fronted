@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 export default Loading = ({loading}) => {
-    console.log(loading);
+  console.log(loading);
+  
+    const [loadingFlag, setloadingFlag]=useState(false);
+
+    // if(loading) {
+    //    let timeout= setTimeout(() => {
+    //         setloadingFlag(false) ;
+    //       }, 10000);
+    //  }
+    //   else {
+    //     setloadingFlag(true) ;
+    //  }
     
+ 
 return (
     <Spinner
         visible={loading}

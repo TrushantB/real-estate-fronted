@@ -8,8 +8,6 @@ import {
   View
  
 } from "react-native";
-
-
 const NotificationDetails = (props) => {
     
   return (
@@ -36,7 +34,7 @@ const NotificationDetails = (props) => {
                 props.handleNotification()
               }}
             >
-              <Text style={styles.textStyle}>Close</Text>
+              <Text style={styles.textStyle} >Close</Text>
             </TouchableHighlight>
           </View>
         </View>
