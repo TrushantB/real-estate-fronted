@@ -10,7 +10,8 @@ import {
 import theme from '../../theme';
 import OngoingService from '../../shard/services/ongoing-site';
 import Loading from '../../shard/components/loading';
-
+import SharedComponent from '../../shard/components/shared';
+let sharedComponent=new SharedComponent();
 let ongoingService=new OngoingService();
 const { width } = Dimensions.get('screen');
 const BASE_SIZE = theme.SIZES.BASE;
@@ -21,8 +22,9 @@ export default class OngoingSite extends React.Component {
   }
   componentDidMount() {
     ongoingService.getOngoingSiteData().then((response) => {
+      console.log("status",response);
       this.setState({dataSource:response.data,loading:false})
-    }).catch((err) => {console.log(err); this.setState({loading:false})})
+    }).catch((err) => {sharedComponent.errorMessages('Ongoing site',err.response.status); this.setState({loading:false})})
   }
 
   calculateTime(date) {

@@ -11,8 +11,8 @@ import theme from '../../theme';
 import NotificationService from '../../shard/services/notification';
 import NotificationDetails from './notification-details';
 import Loading from '../../shard/components/loading';
-import { environment } from '../../../environment/environment';
-
+import SharedComponent from '../../shard/components/shared';
+let sharedComponent=new SharedComponent();
 let notificationService=new NotificationService();
 const { width } = Dimensions.get('screen');
 // const BASE_SIZE = theme.SIZES.BASE;
@@ -31,7 +31,7 @@ export default class Notification extends React.Component {
   componentDidMount() {
     notificationService.getNotificationData().then((response) => {
        this.setState({dataSource:response.data,loading:false})
-    }).catch((err) => {console.log(err); this.setState({loading:false})}
+    }).catch((err) => {sharedComponent.errorMessages('Notification',err.response.status); this.setState({loading:false})}
     )
   }
 
@@ -53,7 +53,7 @@ export default class Notification extends React.Component {
   //   console.log(response);
   //   this.state.dataSource.splice(this.state.index,1);
     
-  // }).catch((err) => {console.log(err); this.setState({loading:false})})
+  // }).catch((err) => {sharedComponent.errorMessages('Notification',err.response.status); this.setState({loading:false})})
 
   }
 

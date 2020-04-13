@@ -19,8 +19,12 @@ import EnquiryService from '../shard/services/enquiry';
 import OngoingService from '../shard/services/ongoing-site';
 import Loading from '../shard/components/loading';
 import { environment } from '../../environment/environment';
+import ValidationComponent from 'react-native-form-validator';
+import SharedComponent from '../shard/components/shared';
+
 let ongoingService=new OngoingService();
 let enquiryService=new EnquiryService();
+let sharedComponent=new SharedComponent();
 const { width } = Dimensions.get('window');
 
 const MARGIN_LEFT = '5%';
@@ -32,7 +36,7 @@ const Header = ({ title }) => (
     <Text h3></Text>
   </Block>
 );
-export default class Enquiry extends React.Component {
+export default class Enquiry extends ValidationComponent {
   state={
     name:'',
     email:'',
@@ -47,23 +51,30 @@ export default class Enquiry extends React.Component {
     this.setState({[name]:value})
   }
   submit() {
-    let { contact,message } = this.state;
-    let item = {
-      name: JSON.parse(environment.userDetails).name,
-      contact:contact,
-      email: JSON.parse(environment.userDetails).email,
-      feedback: message,
-      siteId:this.props.navigation.state.params.siteData.id,
-      isEquiry: true,
-      actiontaken: false,
-      loading:false
+    this.validate({
+      contact: {required:true,minlength:10},
+      message: {required: true},
+    });
+
+    if(this.isFormValid()) {
+      let { contact,message } = this.state;
+      let item = {
+        name: JSON.parse(environment.userDetails).name,
+        contact:contact,
+        email: JSON.parse(environment.userDetails).email,
+        feedback: message,
+        siteId:this.props.navigation.state.params.siteData.id,
+        isEquiry: true,
+        actiontaken: false,
+        loading:false
+      }
+
+      this.setState({loading:true});
+      enquiryService.postEnquiryData(item).then((response) => {
+        this.setState({name:'',email:'',contact:'',message:'',loading:false});
+        this.props.navigation.navigate("Confirmation");
+      }).catch((err) => {sharedComponent.errorMessages('',err.response.status); this.setState({loading:false})});
     }
-    this.setState({loading:true});
-    enquiryService.postEnquiryData(item).then((response) => {
-      this.setState({name:'',email:'',contact:'',message:'',loading:false})
-      this.props.navigation.navigate("Confirmation")
-    }).catch((err) => {console.log(err); this.setState({loading:false})})
-    
   }
   render() {
     const { navigation } = this.props;
@@ -76,9 +87,7 @@ export default class Enquiry extends React.Component {
           <Text h3>{navigation.state.params.siteData.name}</Text>
         </Block>
         <ScrollView >
-          <KeyboardAvoidingView
-           behavior="height"
-           keyboardVerticalOffset={5}>
+        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
           <Block flex middle>
               <Input
                 rounded
@@ -106,6 +115,7 @@ export default class Enquiry extends React.Component {
                 style={{ width: width * 0.9 }}
               onChangeText={text => this.handleChange('contact', text)}
               />
+               <Text style={styles.error}>{this.isFieldInError('contact') && this.getErrorsInField('contact')[0]}</Text>
               <Input
                 rounded
                 placeholder="Write your message here"
@@ -114,6 +124,7 @@ export default class Enquiry extends React.Component {
                 style={{ width: width * 0.9 , height: 150}}
               onChangeText={text => this.handleChange('message', text)}
               />
+              <Text style={styles.error}>{this.isFieldInError('message') && this.getErrorsInField('message')[0]}</Text>
             </Block>
             <Block flex center style={{ marginBottom: 20 }}>
             <Button
@@ -178,5 +189,8 @@ const styles = StyleSheet.create({
     height: 50,
      width: '90%' ,
     //  BORDER
+  },
+  error:{
+    color:theme.COLORS.ERROR
   }
 });

@@ -16,7 +16,9 @@ import theme from '../theme';
 import EnquiryService from '../shard/services/enquiry';
 import Loading from '../shard/components/loading';
 import { environment } from '../../environment/environment';
-
+import ValidationComponent from 'react-native-form-validator';
+import SharedComponent from '../shard/components/shared';
+let sharedComponent=new SharedComponent();
 let enquiryService=new EnquiryService();
 
 const { width } = Dimensions.get('window');
@@ -30,7 +32,7 @@ const Header = ({ title }) => (
     <Text h3></Text>
   </Block>
 );
-export default class Email extends React.Component {
+export default class Email extends ValidationComponent {
   state={
     to:'',
     from:'',
@@ -40,19 +42,27 @@ export default class Email extends React.Component {
   }
 
   send() {
-    let { to,from,subject,body } = this.state;
-    
-    let item = {
-      to:to,
-      from:JSON.parse(environment.userDetails).email,
-      subject:subject,
-      body:body
+    this.validate({
+      to: {required:true,email: true},
+      body: {required: true},
+      subject: {required: false},
+    });
+
+    if(this.isFormValid()) { 
+      let { to,subject,body } = this.state;
+      
+      let item = {
+        to:to,
+        from:JSON.parse(environment.userDetails).email,
+        subject:subject,
+        body:body
+      }
+      this.setState({loading:true});
+      enquiryService.postMailData(item).then((response) => {
+        this.setState({to:'',subject:'',body:'',loading:false});
+        this.props.navigation.navigate("Confirmation")
+      }).catch((err) => {sharedComponent.errorMessages('',err.response.status); this.setState({loading:false})})
     }
-    this.setState({loading:true});
-    enquiryService.postMailData(item).then((response) => {
-      this.setState({to:'',subject:'',body:'',loading:false});
-      this.props.navigation.navigate("Confirmation")
-    }).catch((err) => {console.log(err); this.setState({loading:false})})
   }
 
   handleChange (name,text)  {
@@ -81,9 +91,7 @@ export default class Email extends React.Component {
           <Text h3>Get in touch.</Text>
         </Block>
         <ScrollView >
-          <KeyboardAvoidingView
-           behavior="height"
-           keyboardVerticalOffset={5}>
+        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
           <Block flex middle>
             <Input
             rounded
@@ -93,6 +101,7 @@ export default class Email extends React.Component {
             value={to}
             onChangeText={text => this.handleChange('to', text)}
             />
+            <Text style={styles.error}>{this.isFieldInError('to') && this.getErrorsInField('to')[0]}</Text>
             <Input
             rounded
             placeholder="From"
@@ -118,6 +127,7 @@ export default class Email extends React.Component {
             value={body}
             onChangeText={text => this.handleChange('body', text)}
             />
+            <Text style={styles.error}>{this.isFieldInError('body') && this.getErrorsInField('body')[0]}</Text>
             </Block>
             <Block flex center style={{ marginBottom: 20 }}>
             <Button

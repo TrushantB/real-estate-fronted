@@ -13,15 +13,19 @@ import {
 } from 'galio-framework';
 import theme from '../theme';
 import AuthService from '../shard/services/auth';
+import ValidationComponent from 'react-native-form-validator';
+import Loading from '../shard/components/loading';
+
 const authService=new AuthService();
 const { height, width } = Dimensions.get('window');
 
-class Register extends React.Component {
+class Register extends ValidationComponent {
   state = {
     name: '',
     contact: '',
     email: '',
     password: '',
+    Loading:false
   }
 
   handleChange = (name, value) => {
@@ -34,15 +38,24 @@ class Register extends React.Component {
       name:name,
       contact:contact,
       email:email,
-      password:password,
-      loading:false
+      // username:username,
+      password:password
     }
-    this.setState({loading:true})
-    authService.registration(item).then((response) => {
-      this.setState({loading:false})
-      this.props.navigation.navigate('Login');
-      this.setState({name:'',contact:'',email:'',password:''})
-    }).catch((err) => {console.log(err); this.setState({loading:false})});
+    console.log(item);
+    this.validate({
+      email: {required:true,email: true,},
+      password: {required: true,minlength:8},
+      name:{required: true},
+      contact:{required: true,minlength:10},
+    });
+    if(this.isFormValid()) {
+     this.setState({loading:true});
+      authService.registration(item).then((response) => {
+        console.log(response);
+        this.props.navigation.navigate('Login');
+        this.setState({name:'',contact:'',email:'',password:'',loading:true})
+      });
+    }
   }
   render() {
     const { navigation } = this.props;
@@ -55,7 +68,7 @@ class Register extends React.Component {
           style={Platform.OS === 'android' ? { marginTop: theme.SIZES.BASE } : null}
           />
           <ScrollView>
-          {/* <KeyboardAvoidingView style={styles.container} behavior="height" enabled> */}
+          <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
           <Block
             flex
             center
@@ -129,6 +142,8 @@ class Register extends React.Component {
                 style={{ width: width * 0.9 }}
                 onChangeText={text => this.handleChange('name', text)}
               />
+              <Text style={styles.error}>{this.isFieldInError('name') && this.getErrorsInField('name')[0]}</Text>
+
             <Input
                 rounded
                 placeholder="Contact"
@@ -138,6 +153,7 @@ class Register extends React.Component {
                 style={{ width: width * 0.9 }}
                 onChangeText={text => this.handleChange('contact', text)}
               />
+              <Text style={styles.error}>{this.isFieldInError('contact') && this.getErrorsInField('contact')[0]}</Text>
               <Input
                 rounded
                 type="email-address"
@@ -147,6 +163,7 @@ class Register extends React.Component {
                 style={{ width: width * 0.9 }}
                 onChangeText={text => this.handleChange('email', text)}
               />
+              <Text style={styles.error}>{this.isFieldInError('email') && this.getErrorsInField('email')[0]}</Text>
               <Input
                 rounded
                 password
@@ -156,6 +173,7 @@ class Register extends React.Component {
                 style={{ width: width * 0.9 }}
                 onChangeText={text => this.handleChange('password', text)}
               />
+              <Text style={styles.error}>{this.isFieldInError('password') && this.getErrorsInField('password')[0]}</Text>
             </Block>
             <Block flex middle>
               <Button
@@ -173,10 +191,9 @@ class Register extends React.Component {
               </Button>
             </Block>
           </Block>
-        {/* </KeyboardAvoidingView> */}
-
+        </KeyboardAvoidingView>
+        <Loading loading={this.state.loading}/>
           </ScrollView>
-          <Loading loading={this.state.loading}/>
              </Block>
     );
   }
@@ -197,6 +214,9 @@ const styles = StyleSheet.create({
     borderRadius: theme.SIZES.BASE * 1.75,
     justifyContent: 'center',
   },
+  error:{
+    color:theme.COLORS.ERROR
+  }
 });
 
 export default Register;

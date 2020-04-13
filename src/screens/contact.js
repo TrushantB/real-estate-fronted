@@ -16,7 +16,10 @@ import theme from '../theme';
 import ContactService from '../shard/services/contact';
 import Loading from '../shard/components/loading';
 import { environment } from '../../environment/environment';
+import ValidationComponent from 'react-native-form-validator';
+import SharedComponent from '../shard/components/shared';
 
+let sharedComponent=new SharedComponent();
 const contactService=new ContactService();
 
 const { width } = Dimensions.get('window');
@@ -30,7 +33,7 @@ const Header = ({ title }) => (
     <Text h3></Text>
   </Block>
 );
-export default class Contact extends React.Component {
+export default class Contact extends ValidationComponent {
   state={
     name:'',
     email:'',
@@ -39,20 +42,28 @@ export default class Contact extends React.Component {
     loading:false
   }
   submit() {
-    let { contact,message } = this.state;
-    let item = {
-      name: JSON.parse(environment.userDetails).name,
-      contact:contact,
-      email: JSON.parse(environment.userDetails).email,
-      feedback: message,
-      isEquiry: false,
-      actiontaken: false,
+    this.validate({
+      contact: {required:true,minlength:10},
+      message: {required: true},
+    });
+    
+    if(this.isFormValid()) {
+      let { contact,message } = this.state;
+      let item = {
+        name: JSON.parse(environment.userDetails).name,
+        contact:contact,
+        email: JSON.parse(environment.userDetails).email,
+        feedback: message,
+        isEquiry: false,
+        actiontaken: false,
+      }
+
+      this.setState({loading:true});
+      contactService.postContactData(item).then((response) => {
+        this.setState({contact:'',message:'',loading:false});
+        this.props.navigation.navigate("Confirmation");
+      }).catch((err) => {sharedComponent.errorMessages('',err.response.status); this.setState({loading:false})})
     }
-    this.setState({loading:true});
-    contactService.postContactData(item).then((response) => {
-      this.setState({contact:'',message:'',loading:false});
-      this.props.navigation.navigate("Confirmation")
-    }).catch((err) => {console.log(err); this.setState({loading:false})})
   }
 
   handleChange(name,value) {
@@ -82,10 +93,9 @@ export default class Contact extends React.Component {
         <Block left style={styles.header}>
           <Text h3>Get in touch.</Text>
         </Block>
-        <ScrollView >
-          <KeyboardAvoidingView
-           behavior="height"
-           keyboardVerticalOffset={5}>
+        <ScrollView keyboardDismissMode='on-drag'>
+        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+
           <Block flex middle>
           <Input
                 rounded
@@ -113,6 +123,7 @@ export default class Contact extends React.Component {
                 style={{ width: width * 0.9 }}
               onChangeText={text => this.handleChange('contact', text)}
               />
+              <Text style={styles.error}>{this.isFieldInError('contact') && this.getErrorsInField('contact')[0]}</Text>
               <Input
                 rounded
                 placeholder="Write your message here"
@@ -121,6 +132,8 @@ export default class Contact extends React.Component {
                 style={{ width: width * 0.9 , height: 150}}
               onChangeText={text => this.handleChange('message', text)}
               />
+              <Text style={styles.error}>{this.isFieldInError('message') && this.getErrorsInField('message')[0]}</Text>
+
             </Block>
             <Block flex center style={{ marginBottom: 20 }}>
             <Button
@@ -180,5 +193,8 @@ const styles = StyleSheet.create({
   textArea: {
     height: 150,
     // justifyContent: "flex-start"
+  },
+  error:{
+    color:theme.COLORS.ERROR
   }
 });

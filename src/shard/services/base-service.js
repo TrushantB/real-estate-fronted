@@ -7,10 +7,10 @@ const headers = {
 
 export default class BaseService extends React.Component {
    
+auth(url,data) {
+      return axios.post(`${environment.api}/${url}`,data);
+   }
 
-login(url,data) {
-   return axios.post(`${environment.api}/${url}`,data);
-}
 getData(url) {
    headers.Authorization=JSON.parse(environment.userDetails).token;
    return axios.get(`${environment.api}/${url}`,{headers:headers});

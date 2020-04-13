@@ -5,10 +5,10 @@ export default class AuthService extends React.Component {
 
 
 registration(data) {
- return  baseService.postData('user/signup',data);
+ return  baseService.auth('user/signup',data);
 }
 
 login(data) {
-    return baseService.login('user/login',data)
+    return baseService.auth('user/login',data)
 }
 }

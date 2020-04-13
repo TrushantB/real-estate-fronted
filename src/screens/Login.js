@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  Alert, Dimensions, KeyboardAvoidingView, StyleSheet, Platform,AsyncStorage
+  Alert, Dimensions,ScrollView, KeyboardAvoidingView, StyleSheet, Platform,AsyncStorage
 } from 'react-native';
+import ValidationComponent from 'react-native-form-validator';
 
 // galio component
 import {
@@ -12,10 +13,12 @@ import theme from '../theme';
 import AuthService from '../shard/services/auth';
 import { environment } from '../../environment/environment';
 import Loading from '../shard/components/loading';
+import SharedComponent from '../shard/components/shared';
+let sharedComponent=new SharedComponent();
 const authService=new AuthService();
 const { height, width } = Dimensions.get('window');
 
-class Login extends React.Component {
+class Login extends ValidationComponent {
 
   state = {
     email: '',
@@ -35,13 +38,20 @@ class Login extends React.Component {
     })
   }
 
-  handleChange = (name, value) => {
-    this.setState({ [name]: value });
+  handleChange = () => {
+    // this.setState({ [name]: value });
+    this.props.navigation.navigate("Home");
+
   }
   login() {
-    this.setState({loading:true});
+    this.validate({
+      email: {required:true,email: true,},
+      password: {required: true,minlength:8},
+    });
+
+    if(this.isFormValid()) {
+      this.setState({loading:true});
     authService.login({email:this.state.email,password:this.state.password}).then(async(response) => {
-     console.log(response.data.token);
      if(response.data) {
        let userDetails={
          id:response.data.userdetails._id,
@@ -49,8 +59,8 @@ class Login extends React.Component {
          email:response.data.userdetails.email,
          token:response.data.token
         }
-        await AsyncStorage.setItem('userDetails',JSON.stringify(userDetails)).then((response) => {
-          environment.userDetails=userDetails;
+        await AsyncStorage.setItem('userDetails',JSON.stringify(userDetails)).then((responses) => {
+          environment.userDetails=JSON.stringify(userDetails);
         this.setState({loading:false})
         this.props.navigation.navigate('Home');
        });
@@ -58,8 +68,13 @@ class Login extends React.Component {
      else {
        Alert.alert(response);
      }
-    }).catch((err) => {console.log(err); this.setState({loading:false})})
+    }).catch((err) => {sharedComponent.errorMessages('Login',err.response.status); this.setState({loading:false})})
+    }
+    
   }
+
+
+ 
   render() {
     const { navigation } = this.props;
     const { email, password } = this.state;
@@ -69,9 +84,10 @@ class Login extends React.Component {
         <NavBar
           title="Sign In"
           onLeftPress={() => navigation.openDrawer()}
-          style={Platform.OS === 'android' ? { marginTop: theme.SIZES.BASE } : null}
+          // style={Platform.OS === 'android' ? { marginTop: theme.SIZES.BASE } : null}
         />
-        <KeyboardAvoidingView style={styles.container} behavior="height" enabled>
+        <ScrollView>
+          <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
           <Block flex center style={{ marginTop: theme.SIZES.BASE * 1.875, marginBottom: height * 0.1 }}>
             <Text muted center size={theme.SIZES.FONT * 0.875} style={{ paddingHorizontal: theme.SIZES.BASE * 2.3 }}>
               This is the perfect place to write a short description
@@ -134,16 +150,19 @@ class Login extends React.Component {
                 placeholder="Email"
                 autoCapitalize="none"
                 style={{ width: width * 0.9 }}
-                onChangeText={text => this.handleChange('email', text)}
+                ref="email" onChangeText={(email) => this.setState({email})} value={this.state.email}
               />
+              <Text style={styles.error}>{this.isFieldInError('email') && this.getErrorsInField('email')[0]}</Text>
               <Input
                 rounded
                 password
                 viewPass
                 placeholder="Password"
                 style={{ width: width * 0.9 }}
-                onChangeText={text => this.handleChange('password', text)}
+                ref="password" onChangeText={(password) => this.setState({password})} value={this.state.password}
               />
+              {/* <Text style={styles.error}>{this.isFieldInError('password') && this.getErrorsInField('password')[0]}</Text> */}
+
               <Text
                 color={theme.COLORS.ERROR}
                 size={theme.SIZES.FONT * 0.75}
@@ -169,6 +188,7 @@ class Login extends React.Component {
             </Block>
           </Block>
         </KeyboardAvoidingView>
+        </ScrollView>
         <Loading loading={this.state.loading}/>
       </Block>
     );
@@ -190,6 +210,9 @@ const styles = StyleSheet.create({
     borderRadius: theme.SIZES.BASE * 1.75,
     justifyContent: 'center',
   },
+  error:{
+    color:theme.COLORS.ERROR
+  }
 });
 
 export default Login;
