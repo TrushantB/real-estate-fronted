@@ -1,21 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import {
-  Image, StyleSheet, ScrollView,Linking,TouchableOpacity,FlatList
+  Image, StyleSheet, ScrollView,Linking,TouchableOpacity,FlatList,Modal
 } from 'react-native';
 
 import Constants from 'expo-constants';
-
 // Galio components
 import {
   Button, Block, Text, Icon,
 } from 'galio-framework';
 import theme from '../../theme';
-
+import ImageViewers from '../../shard/components/image-viewer';
 
 const OngoingSiteDetails = props =>{
   const { state } = props.navigation;
-  
+  const [visible , setvisible]  = useState(false);
+
+  function closeLightbox() {
+    setvisible(false);
+  }
  return (
   <Block safe flex>
     <ScrollView style={{ flex: 1 }}>
@@ -48,13 +50,14 @@ const OngoingSiteDetails = props =>{
                 data = {state.params.user.amenities.split(",")}
                 renderItem={  
                     (rowData) => 
-                    <Block style={{justifyContent: 'space-between'}} row>
-                        <Text muted style={styles.textContent} key={rowData.item}>
-                          {`\u2022 ${rowData.item}`}
+                    <Block >
+                      <TouchableOpacity onPress={() => setvisible(true)}>
+                        <Text muted style={styles.textContent} key={rowData.item} >
+                          {`\u2022 ${rowData.item}`} {" "}
+                          <Text  style={styles.textContent,{color:theme.COLORS.INFO}} >View</Text>
                         </Text>
-                          <Icon name="eye"family="font-awesome" size={theme.SIZES.FONT}  style={{textAlign: 'right',fontWeight: 'bold',color:theme.COLORS.GREY}}/>
-                        
-                     </Block>
+                      </TouchableOpacity>
+                      </Block>
                       }  
                       keyExtractor={((item,index) => index.toString())}
             />
@@ -91,6 +94,7 @@ const OngoingSiteDetails = props =>{
           </Text>
         </Block>
       </Block>
+      <ImageViewers visible={visible} closeLightbox={closeLightbox}/>
     </ScrollView>
   </Block>
 );
@@ -152,7 +156,7 @@ const styles = StyleSheet.create({
     lineHeight: theme.SIZES.BASE * 1.25,
     letterSpacing: 0.3,
     marginBottom: theme.SIZES.BASE,
-}
+},
 });
 
 export default OngoingSiteDetails;

@@ -77,42 +77,36 @@ export default class Notification extends React.Component {
           style={Platform.OS === 'android' ? { marginTop: theme.SIZES.BASE } : null}
         />
         <ScrollView contentContainerStyle={styles.cards}>
-          <Block flex space="between">
+          <Block flex >
             {this.state.dataSource.map((card, id) => (
               // <TouchableOpacity >
                 <Card
-                
                   key={`notification-${id}`}
-                  flex
-                  borderless
-                  shadowColor={theme.COLORS.BLACK}
-                  titleColor={card.full ? theme.COLORS.WHITE : null}
-                  style={styles.card}
-                  title={card.notificationName}
-                  caption={`${this.calculateTime(card.createdDt)} minutes ago.`}
-                  location={card.location}
-                  avatar={`http://i.pravatar.cc/100?${id + 5}`}
-                  // image={card.image}
-                  // imageStyle={[card.padded ? styles.rounded : null]}
-                  // imageBlockStyle={[
-                  //   card.padded ? { padding: theme.SIZES.BASE / 2 } : null,
-                  //   card.full ? null : styles.noRadius,
-                  // ]}
-                  // footerStyle={card.full ? styles.full : null}
+                  // flex
+                  
+                  // titleColor={card.full ? theme.COLORS.WHITE : null}
+                  // style={styles.card}
+                  // title={card.notificationName}
+                  // caption={`${this.calculateTime(card.createdDt)} minutes ago.`}
+                  // location={card.location}
+                  // avatar={`http://i.pravatar.cc/100?${id + 5}`}
                 >
                   {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('NotificationDetails',{ user: card })}> */}
-                  <TouchableOpacity onPress={() => this.setState({showNotification:true,notificationData:card,index:id})}>
-
+                  {/* <TouchableOpacity onPress={() => this.setState({showNotification:true,notificationData:card,index:id})}> */}
                     <Block flex >
-                    <Block row>
-                      <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 15}} >{card.notificationDetails}</Text>
+                      <Block row>
+                        <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 15}} >{card.notificationDetails}</Text>
+                        <Icon name="remove" family="font-awesome" size={theme.SIZES.FONT}  style={{fontWeight: 'bold',color:theme.COLORS.GREY}}/>
+                      </Block>
+                      <Block row>
+                        <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 15}} muted>{card.noOfMessages}2 New message</Text>
+                      </Block>
                     </Block>
-                    <Block row>
-                      <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 15}} muted>{card.noOfMessages}2 New message</Text>
-                    </Block>
-                    </Block>
-                  </TouchableOpacity>
+                  {/* </TouchableOpacity> */}
+                  <Text>Mark As Read</Text>
+                   
                 </Card>
+
               // </TouchableOpacity>
               )
               )}
@@ -136,7 +130,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: theme.COLORS.WHITE,
     width: width - theme.SIZES.BASE * 2,
-    marginVertical: theme.SIZES.BASE * 0.875,
+    // marginVertical: theme.SIZES.BASE,
     elevation: theme.SIZES.BASE / 2,
   },
   full: {

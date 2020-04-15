@@ -87,7 +87,7 @@ export default class Enquiry extends ValidationComponent {
           <Text h3>{navigation.state.params.siteData.name}</Text>
         </Block>
         <ScrollView >
-        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+        <KeyboardAvoidingView  style={styles.container} behavior="padding" enabled>
           <Block flex middle>
               <Input
                 rounded

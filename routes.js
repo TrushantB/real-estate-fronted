@@ -20,18 +20,20 @@ import theme from './src/theme';
 // import Matrix from './src/screens/matrix';
 import Contact from './src/screens/contact';
 import Dashboard from './src/screens/dashboard';
-import Enquiry from './src/screens/enquiry';
+// import Enquiry from './src/screens/enquiry';
 import Email from './src/screens/email';
 import SMS from './src/screens/sms';
 import OngoingSite from './src/screens/ongoing-sites/index';
 import Notification from './src/screens/notification/index';
+import { environment } from './environment/environment';
+import Logout from './src/screens/logout';
 const GalioDrawer = props => (
   <SafeAreaView style={styles.drawer} forceInset={{ top: 'always', horizontal: 'never' }}>
     <Block space="between" row style={styles.header}>
       <Block flex={0.3}><Image source={{ uri: 'http://i.pravatar.cc/100' }} style={styles.avatar} /></Block>
       <Block flex style={styles.middle}>
         <Text size={theme.SIZES.FONT * 0.875}>Real Estate Builder</Text>
-        <Text muted size={theme.SIZES.FONT * 0.875}>@iVisionWebStudio</Text>
+        <Text muted size={theme.SIZES.FONT * 0.875}>@{JSON.parse(environment.userDetails).name}</Text>
       </Block>
     </Block>
     <ScrollView>
@@ -152,7 +154,13 @@ const screens = {
       drawerIcon: props => <MenuIcon name="area-chart" family="font-awesome" focused={props.focused} />,
     },
   },
-  
+  Logout: {
+    screen: Logout,
+    navigationOptions: {
+      drawerLabel: 'Logout',
+      drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
+    },
+  },
   // OrderConfirmed: {
     //   screen: OrderConfirmed,
     //   navigationOptions: {

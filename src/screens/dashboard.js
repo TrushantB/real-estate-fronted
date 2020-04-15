@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, ScrollView, Platform,
+  StyleSheet, ScrollView, Platform,TouchableOpacity
 } from 'react-native';
 import { LinearGradient as Gradient } from 'expo';
 import { Defs, LinearGradient, Stop } from 'react-native-svg';
@@ -9,7 +9,7 @@ import * as shape from 'd3-shape';
 
 // galio components
 import {
-  Button, Block, Icon, Text, NavBar,Dropdown
+  Button, Block, Icon, Text, NavBar,
 } from 'galio-framework';
 import theme from '../theme';
 
@@ -22,40 +22,28 @@ const COLOR_GREY = theme.COLORS.MUTED; // '#D8DDE1';
 // mock data
 const cards = [
   {
-    title: 'Kothrud',
-    sold:12,
-    remaining:231,
-    rating:3,
-    subtitle: '15 completed tasks1',
+    title: 'Tasks',
+    subtitle: '15 completed tasks',
     icon: 'list-bullet',
     iconFamily: 'Galio',
   },
 
   {
-    title: 'Hijewadi',
-    sold:12,
-    remaining:231,
-    rating:3,
-    subtitle: '15 completed tasks2',
+    title: 'Aquisitions',
+    subtitle: '15 completed tasks',
     icon: 'bag-17',
     iconFamily: 'Galio',
   },
   {
-    title: 'Pune Station',
-    sold:12,
-    remaining:231,
-    rating:3,
-    subtitle: '15 completed tasks3',
+    title: 'Cards',
+    subtitle: '15 completed tasks',
     icon: 'credit-card',
     iconFamily: 'Galio',
   },
 
   {
-    title: 'Shiajinagar',
-    sold:12,
-    remaining:231,
-    rating:3,
-    subtitle: '15 completed tasks4',
+    title: 'Settings',
+    subtitle: '15 completed tasks',
     icon: 'settings-gear-65',
     iconFamily: 'Galio',
   },
@@ -63,23 +51,21 @@ const cards = [
 const statsTitles = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
 
 class Dashboard extends React.Component {
- 
   renderHeader = () => (
     <NavBar
-      title="Dashboard"
-      onLeftPress={() => this.props.navigation.openDrawer()}
-      leftIconColor={theme.COLORS.MUTED}
-      right={(
-        <Button
-          color="transparent"
-          style={styles.settings}
-          onPress={() => this.props.navigation.openDrawer()}
-        >
-          <Icon size={BASE_SIZE} name="heart" family="font-awesome" color={theme.COLORS.MUTED} />
-        </Button>
-      )}
-      style={Platform.OS === 'android' ? { marginTop: theme.SIZES.BASE } : null}
-    />
+    title="Dashboard"
+    left={(
+      <TouchableOpacity onPress={() => navigation.openDrawer()}>
+        <Icon 
+          name="menu"
+          family="feather"
+          size={theme.SIZES.BASE}
+          color={theme.COLORS.ICON}
+        />
+      </TouchableOpacity>
+    )}
+    style={Platform.OS === 'android' ? { marginTop: theme.SIZES.BASE } : null}
+  />
   )
 
   renderStats = () => {
@@ -97,8 +83,6 @@ class Dashboard extends React.Component {
 
     return (
       <Block style={{ marginBottom: BASE_SIZE * 3 }}>
-   {/* <ScrollView horizontal={true}> */}
-
         <AreaChart
           yMin={0}
           yMax={Math.max(...statsActive) + 1}
@@ -112,24 +96,22 @@ class Dashboard extends React.Component {
         >
           <GradientStats />
         </AreaChart>
-
         <AreaChart
           yMin={0}
-          yMax={Math.max(...statsActive) + 1} 
+          yMax={Math.max(...statsActive) + 1}
           data={statsActive}
           curve={shape.curveNatural}
           style={{ height: BASE_SIZE * 10 }}
           contentInset={{
-              bottom: -BASE_SIZE * 0.21, right: -BASE_SIZE * 0.21, left: -BASE_SIZE * 0.21,
-            }}
-            svg={{ strokeWidth: BASE_SIZE * 0.1875, stroke: 'url(#gradient)' }}
-            >
+            bottom: -BASE_SIZE * 0.21, right: -BASE_SIZE * 0.21, left: -BASE_SIZE * 0.21,
+          }}
+          svg={{ strokeWidth: BASE_SIZE * 0.1875, stroke: 'url(#gradient)' }}
+        >
           <GradientStats />
         </AreaChart>
         <Block row space="evenly" style={{ marginTop: BASE_SIZE }}>
-          {cards.map((item ,index)=> <Text style={{ marginLeft: 40}} key={`title${index}`} size={theme.SIZES.FONT * 0.85} muted>{item.title}</Text>)}
+          {statsTitles.map(title => <Text key={title} size={theme.SIZES.FONT * 0.85} muted>{title}</Text>)}
         </Block>
-            {/* </ScrollView> */}
       </Block>
     );
   }
@@ -138,12 +120,12 @@ class Dashboard extends React.Component {
     const gradientColors = index % 2 ? GRADIENT_BLUE : GRADIENT_PINK;
 
     return (
-      <Block row center card shadow space="between" style={styles.card} key={index}>
-        <LinearGradient
+      <Block row center card shadow space="between" style={styles.card} key={props.title}>
+        {/* <Gradient
           start={[0.45, 0.45]}
           end={[0.90, 0.90]}
           colors={gradientColors}
-          style={[styles.gradient, styles.left]}
+          // style={[styles.gradient, styles.left]}
         >
           <Icon
             size={BASE_SIZE}
@@ -151,23 +133,11 @@ class Dashboard extends React.Component {
             color={COLOR_WHITE}
             family={props.iconFamily}
           />
-        </LinearGradient>
+        </Gradient> */}
 
         <Block flex>
           <Text size={BASE_SIZE * 1.125}>{props.title}</Text>
-          <Block row>
-           <Text style={{fontWeight: 'bold'}}>Sold:</Text>
-           <Text size={BASE_SIZE * 0.875} muted>{props.sold}Flats</Text>
-          </Block>
-          <Block row>
-           <Text style={{fontWeight: 'bold'}}>remaining:</Text>
-           <Text size={BASE_SIZE * 0.875} muted>{props.remaining}Flats</Text>
-          </Block><Block row>
-           <Text style={{fontWeight: 'bold'}}>Rating:</Text>
-           <Text size={BASE_SIZE * 0.875} muted>{props.rating}</Text>
-          </Block>
-
-
+          <Text size={BASE_SIZE * 0.875} muted>{props.subtitle}</Text>
         </Block>
         <Button style={styles.right}>
           <Icon size={BASE_SIZE} name="minimal-right" family="Galio" color={COLOR_GREY} />

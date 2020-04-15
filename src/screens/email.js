@@ -187,5 +187,8 @@ const styles = StyleSheet.create({
   textArea: {
     height: 150,
     // justifyContent: "flex-start"
+  },
+  error:{
+    color:theme.COLORS.ERROR
   }
 });
