@@ -77,33 +77,32 @@ export default class Notification extends React.Component {
           style={Platform.OS === 'android' ? { marginTop: theme.SIZES.BASE } : null}
         />
         <ScrollView contentContainerStyle={styles.cards}>
-          <Block flex >
+          <Block flex style={{marginBottom: 15}} >
             {this.state.dataSource.map((card, id) => (
               // <TouchableOpacity >
                 <Card
                   key={`notification-${id}`}
-                  // flex
-                  
-                  // titleColor={card.full ? theme.COLORS.WHITE : null}
-                  // style={styles.card}
-                  // title={card.notificationName}
-                  // caption={`${this.calculateTime(card.createdDt)} minutes ago.`}
-                  // location={card.location}
-                  // avatar={`http://i.pravatar.cc/100?${id + 5}`}
+                  flex
+                  titleColor={card.full ? theme.COLORS.WHITE : null}
+                  style={styles.card} 
+                  title={card.notificationName}
+                  caption={`${this.calculateTime(card.createdDt)} minutes ago.`}
+                  location={card.location}
+                  avatar={`http://i.pravatar.cc/100?${id + 5}`}
                 >
                   {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('NotificationDetails',{ user: card })}> */}
-                  {/* <TouchableOpacity onPress={() => this.setState({showNotification:true,notificationData:card,index:id})}> */}
+                  {/* <TouchableOpacity onPress={() => this.setState({showNotification:true,notificationData:card,index:id})}> */}  
                     <Block flex >
-                      <Block row>
-                        <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 15}} >{card.notificationDetails}</Text>
-                        <Icon name="remove" family="font-awesome" size={theme.SIZES.FONT}  style={{fontWeight: 'bold',color:theme.COLORS.GREY}}/>
+                      <Block row >
+                        <Text style={{fontWeight: 'normal' ,marginLeft: 15}} >{card.notificationDetails}</Text>
+                        <Icon name="remove" family="font-awesome" size={theme.SIZES.FONT}  style={{fontWeight: 'bold',color:theme.COLORS.GREY, position: 'absolute', top: -55, right: 10,}}/>
                       </Block>
-                      <Block row>
-                        <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 15}} muted>{card.noOfMessages}2 New message</Text>
-                      </Block>
+                      {/* <Block row> 
+                        <Text style={{fontWeight: 'normal',marginLeft: 15,marginBottom: 15}} muted>{card.noOfMessages}2 New message</Text>
+                      </Block> */}
                     </Block>
                   {/* </TouchableOpacity> */}
-                  <Text>Mark As Read</Text>
+                  <Text style={{textAlign:'right', marginRight: 15, color: '#999', fontSize : 13 , marginBottom:13 }}>Mark As Read</Text>
                    
                 </Card>
 
@@ -131,7 +130,10 @@ const styles = StyleSheet.create({
     backgroundColor: theme.COLORS.WHITE,
     width: width - theme.SIZES.BASE * 2,
     // marginVertical: theme.SIZES.BASE,
+    marginBottom: 17,
+    borderRadius: 4,
     elevation: theme.SIZES.BASE / 2,
+
   },
   full: {
     position: 'absolute',

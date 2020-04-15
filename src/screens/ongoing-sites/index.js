@@ -60,6 +60,7 @@ export default class OngoingSite extends React.Component {
               card.image='https://i.picsum.photos/id/1076/400/400.jpg';
                   return (
                     <Card
+                      
                       key={`card${id}`}
                       flex
                       borderless
@@ -96,13 +97,13 @@ export default class OngoingSite extends React.Component {
                         </Block>
       
                         <Block row>
-                        <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 10}}>Amenities: </Text>
-                        <Text size={BASE_SIZE * 0.875} muted>{card.amenities}</Text>
+                          <Text style={{fontWeight: 'bold', marginLeft: 15, marginBottom: 10}}>Amenities: </Text>
+                          <Text size={BASE_SIZE * 0.875} muted>{card.amenities}</Text>
                         </Block>
       
                         <Block row>
-                        <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 10}}>Available Loans: </Text>
-                        <Text size={BASE_SIZE * 0.875} muted>{card.BanksLoanProvidedBy}</Text>
+                          <Text style={{fontWeight: 'bold',marginLeft: 15,marginBottom: 10}}>Available Loans: </Text>
+                          <Text size={BASE_SIZE * 0.875} muted>{card.BanksLoanProvidedBy}</Text>
                         </Block>
                     </Block>
                     </TouchableOpacity>

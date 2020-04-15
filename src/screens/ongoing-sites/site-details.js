@@ -54,8 +54,9 @@ const OngoingSiteDetails = props =>{
                       <TouchableOpacity onPress={() => setvisible(true)}>
                         <Text muted style={styles.textContent} key={rowData.item} >
                           {`\u2022 ${rowData.item}`} {" "}
-                          <Text  style={styles.textContent,{color:theme.COLORS.INFO}} >View</Text>
+                         
                         </Text>
+                         <Text  style={styles.textContent,{color:theme.COLORS.INFO,textAlign:'right' , position: 'absolute', top: 7, right: 10 }} >View</Text>
                       </TouchableOpacity>
                       </Block>
                       }  
