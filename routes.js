@@ -27,6 +27,7 @@ import OngoingSite from './src/screens/ongoing-sites/index';
 import Notification from './src/screens/notification/index';
 import { environment } from './environment/environment';
 import Logout from './src/screens/logout';
+import Enquiry from './src/screens/enquiry';
 const GalioDrawer = props => (
   <SafeAreaView style={styles.drawer} forceInset={{ top: 'always', horizontal: 'never' }}>
     <Block space="between" row style={styles.header}>
@@ -87,22 +88,15 @@ MenuIcon.propTypes = {
 };
 
 const screens = {
+ 
   OngoingSite: {
     screen: OngoingSite,
     navigationOptions: {
       drawerLabel: 'Ongoing Sites',
-      
       drawerIcon: props => <MenuIcon name="hourglass-half" family="font-awesome" focused={props.focused} />,
-      
     },
   },
-  // Enquiry: {
-  //   screen: Enquiry,
-  //   navigationOptions: {
-  //     drawerLabel: 'Enquiry',
-  //     drawerIcon: props => <MenuIcon name="phone" family="font-awesome" focused={props.focused} />,
-  //   },
-  // },
+
   Notification: {
     screen: Notification,
     navigationOptions: {
@@ -133,27 +127,7 @@ const screens = {
     },
     
   },
-  // Login: {
-  //   screen: Login,
-  //   navigationOptions: {
-  //     drawerLabel: 'Login',
-  //     drawerIcon: props => <MenuIcon name="user" family="font-awesome" focused={props.focused} />,
-  //   },
-  // },
-  // Register: {
-  //   screen: Register,
-  //   navigationOptions: {
-  //     drawerLabel: 'Register',
-  //     drawerIcon: props => <MenuIcon name="user-plus" family="font-awesome" focused={props.focused} />,
-  //   },
-  // },
-  Dashboard: {
-    screen: Dashboard,
-    navigationOptions: {
-      drawerLabel: 'Dashboard',
-      drawerIcon: props => <MenuIcon name="area-chart" family="font-awesome" focused={props.focused} />,
-    },
-  },
+ 
   Logout: {
     screen: Logout,
     navigationOptions: {
@@ -161,35 +135,6 @@ const screens = {
       drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
     },
   },
-  // OrderConfirmed: {
-    //   screen: OrderConfirmed,
-    //   navigationOptions: {
-      //     drawerLabel: 'Order Confirmed',
-      //     drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-      //   },
-      // },
-      // Presentation: {
-        //   screen: Presentation,
-        //   navigationOptions: {
-          //     drawerLabel: 'Presentation Screen',
-          //     drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-          //   },
-          // },
-          
-          // Registerv2: {
-  //   screen: Registerv2,
-  //   navigationOptions: {
-  //     drawerLabel: 'Register Screen v2',
-  //     drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-  //   },
-  // },
-  // Grid: {
-  //   screen: Grid,
-  //   navigationOptions: {
-  //     drawerLabel: 'Grid Screen',
-  //     drawerIcon: props => <MenuIcon name="flag" family="font-awesome" focused={props.focused} />,
-  //   },
-  // },
 };
 
 const options = {

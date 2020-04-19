@@ -1,18 +1,26 @@
 import React from 'react';
 import {
-  StyleSheet, ScrollView, Platform,TouchableOpacity
+  StyleSheet, ScrollView, Platform,TouchableOpacity,Dimensions,View
 } from 'react-native';
 import { LinearGradient as Gradient } from 'expo';
 import { Defs, LinearGradient, Stop } from 'react-native-svg';
-import { AreaChart } from 'react-native-svg-charts';
+import { AreaChart,ProgressCircle  } from 'react-native-svg-charts';
 import * as shape from 'd3-shape';
 
 // galio components
 import {
-  Button, Block, Icon, Text, NavBar,
+  Button, Block, Icon, Text, NavBar, Card,
 } from 'galio-framework';
 import theme from '../theme';
-
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart
+} from "react-native-chart-kit";
+const { width } = Dimensions.get('screen');
 const BASE_SIZE = theme.SIZES.BASE;
 const GRADIENT_BLUE = ['#6B84CA', '#8F44CE'];
 const GRADIENT_PINK = ['#D442F8', '#B645F5', '#9B40F8'];
@@ -48,14 +56,14 @@ const cards = [
     iconFamily: 'Galio',
   },
 ];
-const statsTitles = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
+const statsTitles = ['Jul','Feb','Mar','Apr','May','June','July', 'Aug', 'Sep', 'Oct', 'Nov','Dec'];
 
 class Dashboard extends React.Component {
   renderHeader = () => (
     <NavBar
     title="Dashboard"
     left={(
-      <TouchableOpacity onPress={() => navigation.openDrawer()}>
+      <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
         <Icon 
           name="menu"
           family="feather"
@@ -147,7 +155,7 @@ class Dashboard extends React.Component {
   }
 
   renderCards = () => cards.map((card, index) => this.renderCard(card, index))
-
+ LINE
   render() {
     return (
       <Block safe flex>
@@ -155,12 +163,101 @@ class Dashboard extends React.Component {
         {this.renderHeader()}
 
         {/* stats */}
-        {this.renderStats()}
+        <ScrollView >
+        <View>
+  <LineChart
+    data={{
+      labels: ["January", "February", "March", "April", "May", "June", "March", "April", "May", "June"],
+      datasets: [
+        {
+          data: [
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100
+          ]
+        }
+      ]
+    }}
+    width={Dimensions.get("window").width} // from react-native
+    height={220}
+    yAxisLabel="$"
+    yAxisSuffix="k"
+    yAxisInterval={1} // optional, defaults to 1
+    chartConfig={{
+      backgroundColor: "#e26a00",
+      backgroundGradientFrom: "#fb8c00",
+      backgroundGradientTo: "#ffa726",
+      decimalPlaces: 2, // optional, defaults to 2dp
+      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      style: {
+        borderRadius: 16
+      },
+      propsForDots: {
+        r: "6",
+        strokeWidth: "2",
+        stroke: "#ffa726"
+      }
+    }}
+    bezier
+    style={{
+      marginVertical: 8,
+      borderRadius: 16
+    }}
+  />
+</View>
+<Block>
+
+{/* <ProgressCircle 
+  style={{ height: 100 }}
+  progress={0.7}
+  progressColor={'rgb(134, 65, 244)'} 
+  strokeWidth={20}
+/> */}
+<ProgressCircle 
+  style={{ height: 200 }}
+  progress={0.7}
+  progressColor={'rgb(134, 65, 244)'} 
+  strokeWidth={20}
+/>
+</Block>
+<Block row space="evenly">
+  <Card
+  style={styles.card,{width:'50%',padding:10}}>
+  <ProgressCircle 
+  style={{ height: 100 }}
+  progress={0.7}
+  progressColor={'rgb(134, 65, 244)'} 
+  strokeWidth={10}
+/>
+  </Card>
+  <Card
+  style={styles.card,{width:'50%',padding:10}}>
+  <ProgressCircle 
+  style={{ height: 100 }}
+  progress={0.7}
+  progressColor={'rgb(134, 65, 244)'} 
+  strokeWidth={10}
+/>
+  </Card>
+</Block>
+        {/* <Card
+        style={styles.card} >
+          {this.renderStats()}
+        </Card> */}
+        </ScrollView>
+
 
         {/* cards */}
-        <ScrollView style={{ flex: 1 }}>
-          {this.renderCards()}
-        </ScrollView>
+          {/* {this.renderCards()} */}
+          
       </Block>
     );
   }
@@ -197,6 +294,12 @@ const styles = StyleSheet.create({
     borderRadius: BASE_SIZE * 3.25,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  cards: {
+    width,
+    backgroundColor: theme.COLORS.WHITE,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
 });
 

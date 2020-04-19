@@ -91,11 +91,13 @@ export default class Notification extends React.Component {
                   avatar={`http://i.pravatar.cc/100?${id + 5}`}
                 >
                   {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('NotificationDetails',{ user: card })}> */}
-                  {/* <TouchableOpacity onPress={() => this.setState({showNotification:true,notificationData:card,index:id})}> */}  
+                 
                     <Block flex >
                       <Block row >
                         <Text style={{fontWeight: 'normal' ,marginLeft: 15}} >{card.notificationDetails}</Text>
-                        <Icon name="remove" family="font-awesome" size={theme.SIZES.FONT}  style={{fontWeight: 'bold',color:theme.COLORS.GREY, position: 'absolute', top: -55, right: 10,}}/>
+                         <TouchableOpacity style={{position: 'absolute', top: -55, right: 10}} onPress={() => this.setState({showNotification:true,notificationData:card,index:id})}>  
+                        <Icon name="remove" family="font-awesome" size={theme.SIZES.FONT}  style={{fontWeight: 'bold',color:theme.COLORS.GREY}}/>
+                         </TouchableOpacity>             
                       </Block>
                       {/* <Block row> 
                         <Text style={{fontWeight: 'normal',marginLeft: 15,marginBottom: 15}} muted>{card.noOfMessages}2 New message</Text>

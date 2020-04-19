@@ -46,7 +46,7 @@ class Register extends ValidationComponent {
       email: {required:true,email: true,},
       password: {required: true,minlength:8},
       name:{required: true},
-      contact:{required: true,minlength:10},
+      contact:{required: true,minlength:10,maxlength:10},
     });
     if(this.isFormValid()) {
      this.setState({loading:true});

@@ -5,17 +5,27 @@ import { AsyncStorage } from 'react-native';
 import {
   Block
 } from 'galio-framework';
-
+import AuthService from '../shard/services/auth';
+import Loading from '../shard/components/loading';
+import SharedComponent from '../shard/components/shared';
+let sharedComponent=new SharedComponent();
+let authService=new AuthService();
 export default class Logout extends ValidationComponent {
-  componentWillMount() {
-  AsyncStorage.clear();
-  this.props.navigation.navigate("Login");
+  state={
+    loading:true
+  }
+  componentDidMount() {
+    authService.logout().then((response) => {
+      AsyncStorage.clear();
+      this.props.navigation.navigate("Login");
+      this.setState({loading:false})
+    }).catch((err) => {sharedComponent.errorMessages('Logout',err.response.status); this.setState({loading:false})})
   }
  
   render() {
     return (
       <Block safe flex >
-        
+        <Loading loading={this.state.loading}/>
       </Block>
     );
   }

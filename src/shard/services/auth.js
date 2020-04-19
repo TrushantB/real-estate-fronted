@@ -9,6 +9,9 @@ registration(data) {
 }
 
 login(data) {
-    return baseService.auth('user/login',data)
+    return baseService.auth('user/login',data);
+}
+logout() {
+    return baseService.logout('user/logout');
 }
 }

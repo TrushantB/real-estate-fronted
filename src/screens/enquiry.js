@@ -52,7 +52,7 @@ export default class Enquiry extends ValidationComponent {
   }
   submit() {
     this.validate({
-      contact: {required:true,minlength:10},
+      contact: {required:true,minlength:10,maxlength:10},
       message: {required: true},
     });
 
@@ -66,7 +66,6 @@ export default class Enquiry extends ValidationComponent {
         siteId:this.props.navigation.state.params.siteData.id,
         isEquiry: true,
         actiontaken: false,
-        loading:false
       }
 
       this.setState({loading:true});

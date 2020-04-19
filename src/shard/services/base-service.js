@@ -24,5 +24,9 @@ postData(url,data) {
    headers.Authorization=JSON.parse(environment.userDetails).token;
    return axios.put(`${environment.api}/${url}`,data,{headers:headers});
  }
- 
+
+ logout(url) {
+   headers.Authorization=JSON.parse(environment.userDetails).token;
+   return axios.post(`${environment.api}/${url}`,{},{headers: headers});
+ }
 }

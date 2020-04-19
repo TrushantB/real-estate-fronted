@@ -28,11 +28,7 @@ const MARGIN_LEFT = '5%';
 const SOCIAL_ICON_SIZE = theme.SIZES.BASE * 1.5;
 const SOCIAL_BTN_SIZE = theme.SIZES.BASE * 3;
 
-const Header = ({ title }) => (
-  <Block left style={styles.header}>
-    <Text h3></Text>
-  </Block>
-);
+
 export default class Contact extends ValidationComponent {
   state={
     name:'',
@@ -43,7 +39,7 @@ export default class Contact extends ValidationComponent {
   }
   submit() {
     this.validate({
-      contact: {required:true,minlength:10},
+      contact: {required:true,minlength:10,maxlength:10},
       message: {required: true},
     });
     
